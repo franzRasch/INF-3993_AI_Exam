@@ -1,3 +1,6 @@
+Gitmojis found at: https://gitmoji.dev/
+
+
 Productive Learning (Prole). Helps you learn the syllabus with AI assistance.
     ProLe (Prole, means Productive Learning) This can be the name of the product
 
