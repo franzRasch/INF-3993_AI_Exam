@@ -1,0 +1,42 @@
+name: Pull Request Validation
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate-spelling:
+    name: Validate Spelling
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: streetsidesoftware/cspell-action@v6
+
+  validate-formatting:
+    name: Validate Formatting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install formatters
+        run: |
+          npm install --global prettier
+          pip install black flake8
+
+      - name: Check frontend
+        run: npx prettier --check "src/frontend/"
+
+      - name: Check backend
+        run: black --check src/backend
