@@ -1,6 +1,6 @@
 # INF-3993_AI-Exam
 
-## Contributors: Franz Ingebrigtsen, Marie Stenhaug and Skjalg Slubowski
+## Contributors: Franz Ingebrigtsen, Marie Alette Stenhaug and Skjalg Slubowski
 
 ## Pre-requisites
 
