@@ -11,6 +11,7 @@
   "dictionaries": ["project-words", "typescript", "node", "softwareTerms"],
   "ignorePaths": [
     "project-words.txt",
+    "requirements.txt",
     "node_modules",
     ".expo",
     ".idea",

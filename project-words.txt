@@ -1,0 +1,10 @@
+TTFB
+venv
+uvicorn
+
+Skjalg
+Slubowski
+Marie
+Stenhaug
+Frans
+Ingebrigtsen
