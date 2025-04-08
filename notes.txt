@@ -42,6 +42,7 @@ Resources:
 Features:
     Speach to text: Whisper
     Our own LLM with NLP and word-embeddings, transformers, prompt engineering
+    Procrastination station: a page for students to use valuable time (Brain rot)
 
 Questions:
     Eksamensveiledning - hva forventer for å få en A
