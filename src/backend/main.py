@@ -16,9 +16,10 @@ app.add_middleware(
 # Include the router from endpoints.py
 app.include_router(router)
 
+
 @app.get("/")
 async def root():
     return {"message": "Home Page"}
 
-print([route.path for route in app.routes])
 
+print([route.path for route in app.routes])
