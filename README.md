@@ -28,6 +28,11 @@ Alternatively there is a VSCode extension available [here](https://marketplace.v
 
 If CSpell incorrectly flags a word you can add it to `project-words.txt`.
 
+#### Black
+
+We use black to format the python code. It is a code formatter that formats the code according to PEP 8.
+Can be downloaded from [here](https://marketplace.visualstudio.com/items/?itemName=ms-python.black-formatter)
+
 #### Prettier
 
 We use prettier to properly format the code of the project. Please install a prettier plugin for your editor.
@@ -79,13 +84,13 @@ uvicorn main:app --reload
 #### Access backend
 
 ```bash
-    http://localhost:8000/
+http://localhost:8000/
 ```
 
 #### Access backend api endpoints
 
 ```bash
-    http://localhost:8000/docs
+http://localhost:8000/docs
 ```
 
 ### Frontend
