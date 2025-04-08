@@ -11,6 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Validate Spelling
         uses: streetsidesoftware/cspell-action@v6
 
   validate-formatting:
