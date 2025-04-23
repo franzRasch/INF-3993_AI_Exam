@@ -1,10 +1,26 @@
 Gitmojis found at: https://gitmoji.dev/
 
+✅ 
+Current sprint:
 
-Productive Learning (Prole). Helps you learn the syllabus with AI assistance.
+
+
+Backlog:
+    - 
+
+
+
+
+
+Rag/Rugged/ranked with a vector database
+Use a pre-trained chatbot + Rag
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+Ai Tutor Learning (AiT). Helps you learn the syllabus with AI assistance.
     ProLe (Prole, means Productive Learning) This can be the name of the product
 
-    Whisper: Talk to the bot and get a reponse, acting as a person you can talk to. Speech to text
+    Whisper: Talk to the bot and get a response, acting as a person you can talk to. Speech to text
     NanoGPT: An LLM, NLP and transformer
         ✅ Generating structured study summaries from lecture transcripts.
         ✅ Creating exam-style questions based on the syllabus.
@@ -21,11 +37,14 @@ Productive Learning (Prole). Helps you learn the syllabus with AI assistance.
         Ai Ethics: GDPR
         LLM
         NLP, embeddings and vector calculations
-            LoRA training and finetuning
+            LoRA training and fine tuning
 
 
 Backend: FastAPI (Python)
-Fronend: Framework: 
+Frontend: Framework: React
+
+
+
 
 
 

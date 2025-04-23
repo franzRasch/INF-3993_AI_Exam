@@ -2,4 +2,5 @@ fastapi
 redis
 types-redis
 uvicorn
-axios
+black
+flake8

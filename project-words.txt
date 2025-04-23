@@ -1,10 +1,12 @@
 TTFB
 venv
 uvicorn
+Gitmojis
+Hugginface
 
 Skjalg
 Slubowski
 Marie
 Stenhaug
-Frans
+Franz
 Ingebrigtsen
