@@ -4,3 +4,15 @@ types-redis
 uvicorn
 black
 flake8
+chromadb
+langchain
+langchain-huggingface
+langchain-ollama
+langchain-community
+langchain-chroma
+sentence-transformers
+PyTorch
+TensorFlow
+Flax
+transformers
+pymupdf
