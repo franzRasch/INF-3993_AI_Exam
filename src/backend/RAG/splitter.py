@@ -7,8 +7,6 @@ MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 CHROMA_DIR = "./chroma_db"
 
 
-
-
 def split_documents_by_task(documents: list[Document]) -> list[Document]:
     task_docs = []
     for doc in documents:
@@ -19,7 +17,6 @@ def split_documents_by_task(documents: list[Document]) -> list[Document]:
                 content = "Task " + clean  # add "Task" back
                 task_docs.append(Document(page_content=content, metadata=doc.metadata))
     return task_docs
-
 
 
 def split_documents(documents: list[Document], chunk_size=1000, overlap=200) -> list[Document]:
@@ -33,8 +30,6 @@ def split_documents(documents: list[Document], chunk_size=1000, overlap=200) -> 
         is_separator_regex=False,
     )
     return text_splitter.split_documents(documents)  # ✅ Correct method
-
-# --- STEP 2: Embed and Store into Chroma ---
 
 
 
