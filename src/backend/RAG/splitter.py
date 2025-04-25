@@ -32,7 +32,7 @@ def split_documents(documents: list[Document], chunk_size=1000, overlap=200) -> 
     return text_splitter.split_documents(documents)  # ✅ Correct method
 
 
-
+# Post processing function to split documents based on their type
 def smart_split_documents(documents: list[Document], is_exam: bool = False) -> list[Document]:
     """
     If the document is an exam, split by 'Task', else do standard recursive chunking.
