@@ -7,7 +7,7 @@ from typing import List
 router = APIRouter()
 
 
-class exampleDataInput(BaseModel):
+class ExampleDataInput(BaseModel):
     text: str
 
 
