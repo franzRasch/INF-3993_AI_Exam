@@ -10,3 +10,7 @@ Marie
 Stenhaug
 Franz
 Ingebrigtsen
+
+huggingface
+docstore
+vectorstore
