@@ -26,11 +26,14 @@ def rag_pipeline():
     # Step 5: split the documents depended on the document
     chunks = smart_split_documents(docs, is_exam=True)
 
-    #Store chunks in the vector store
+    # Store chunks in the vector store
     store_documents(chunks)
-    print(f"Stored {len(chunks)} chunks into the vector store from {len(docs)} different PDFs.")
+    print(
+        f"Stored {len(chunks)} chunks into the vector store from {len(docs)} different PDFs."
+    )
 
     trainer = ExamTrainer(topic="advanced databases", model_name="qwen:1.8b")
     trainer.run()
+
 
 rag_pipeline()
