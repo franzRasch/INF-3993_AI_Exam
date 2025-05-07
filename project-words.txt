@@ -3,6 +3,13 @@ venv
 uvicorn
 Gitmojis
 Hugginface
+vectorstore
+vectorstores
+LANGSMITH
+llms
+dotenv
+ollama
+qwen
 
 Skjalg
 Slubowski

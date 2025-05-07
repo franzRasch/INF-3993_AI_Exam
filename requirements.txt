@@ -5,7 +5,9 @@ uvicorn
 black
 flake8
 chromadb
+ollama
 langchain
+langchain-openai
 langchain-huggingface
 langchain-ollama
 langchain-community
@@ -16,3 +18,4 @@ TensorFlow
 Flax
 transformers
 pymupdf
+python-dotenv
