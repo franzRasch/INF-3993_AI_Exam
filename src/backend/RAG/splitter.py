@@ -19,7 +19,9 @@ def split_documents_by_task(documents: list[Document]) -> list[Document]:
     return task_docs
 
 
-def split_documents(documents: list[Document], chunk_size=1000, overlap=200) -> list[Document]:
+def split_documents(
+    documents: list[Document], chunk_size=1000, overlap=200
+) -> list[Document]:
     """
     Split LangChain Document objects into smaller chunks for embedding and retrieval.
     """
@@ -32,8 +34,9 @@ def split_documents(documents: list[Document], chunk_size=1000, overlap=200) -> 
     return text_splitter.split_documents(documents)  # ✅ Correct method
 
 
-
-def smart_split_documents(documents: list[Document], is_exam: bool = False) -> list[Document]:
+def smart_split_documents(
+    documents: list[Document], is_exam: bool = False
+) -> list[Document]:
     """
     If the document is an exam, split by 'Task', else do standard recursive chunking.
     """
@@ -42,7 +45,3 @@ def smart_split_documents(documents: list[Document], is_exam: bool = False) -> l
         return split_documents(task_docs)
     else:
         return split_documents(documents)
-    
-
-
-
