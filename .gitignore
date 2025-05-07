@@ -4,3 +4,7 @@
 env/
 
 *.vscode
+
+# Ignore db and cache files
+__pycache__/
+**/chroma_db/
