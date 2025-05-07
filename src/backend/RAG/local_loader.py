@@ -10,14 +10,16 @@ import os
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 CHROMA_DIR = "./chroma_db"
 
+
 def extract_text_from_pdf(file_path: str) -> str:
     with pymupdf.open(file_path) as pdf:
         return "".join(page.get_text() for page in pdf)
 
+
 def extract_text_from_txt(file_path: str) -> str:
     with open(file_path, "r", encoding="utf-8") as f:
         return f.read()
-    
+
 
 def load_documents(folder_path: str) -> list[Document]:
     """Returns a list of documents from the specified folder."""
@@ -39,9 +41,3 @@ def load_documents(folder_path: str) -> list[Document]:
         documents.append(Document(page_content=text, metadata={"source": filename}))
 
     return documents
-
-
-
-
-
-

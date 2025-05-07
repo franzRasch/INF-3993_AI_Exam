@@ -25,11 +25,12 @@ def rag_pipeline():
     # Step 5: split the documents depended on the document
     chunks = smart_split_documents(docs, is_exam=True)
 
-    #Store chunks in the vector store
+    # Store chunks in the vector store
     store_documents(chunks)
-    #for chunk in chunks:
+    # for chunk in chunks:
     #    print(f"chunk: {chunk}")
-    
+
     print(f"Stored {len(chunks)} chunks into the vector store.")
+
 
 rag_pipeline()
