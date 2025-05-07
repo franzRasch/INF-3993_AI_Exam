@@ -3,6 +3,7 @@ import os
 from local_loader import load_documents
 from splitter import smart_split_documents
 from vectorstore import store_documents
+from llm_ollama import ExamTrainer
 
 # --- CONFIG ---
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
@@ -27,9 +28,9 @@ def rag_pipeline():
 
     #Store chunks in the vector store
     store_documents(chunks)
-    #for chunk in chunks:
-    #    print(f"chunk: {chunk}")
-    
-    print(f"Stored {len(chunks)} chunks into the vector store.")
+    print(f"Stored {len(chunks)} chunks into the vector store from {len(docs)} different PDFs.")
+
+    trainer = ExamTrainer(topic="advanced databases", model_name="qwen:1.8b")
+    trainer.run()
 
 rag_pipeline()
