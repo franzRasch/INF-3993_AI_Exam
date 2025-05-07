@@ -14,3 +14,4 @@ Ingebrigtsen
 huggingface
 docstore
 vectorstore
+vectorstores
