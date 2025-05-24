@@ -1,4 +1,4 @@
-import logo from './assets/GenAi-Logo.svg';
+import logo from './assets/GenAi-Logo-2.svg';
 import './App.css';
 
 function App() {
