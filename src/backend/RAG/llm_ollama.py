@@ -1,7 +1,7 @@
 from langchain_ollama import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
 from template import create_template
-from vectorstore import query_vectorstore
+from vectorstore import load_vectorstore
 
 
 class ExamTrainer:
@@ -15,6 +15,9 @@ class ExamTrainer:
         template = create_template()
         self.prompt_template = ChatPromptTemplate.from_template(template)
 
+        self.db = load_vectorstore()
+
+
     def _format_prompt(self, question: str, retrieved_context: str) -> str:
         return self.prompt_template.format_prompt(
             topic=self.topic,
@@ -24,8 +27,13 @@ class ExamTrainer:
             weak_topics=", ".join(self.weak_topics) or "None"
         ).to_string()
 
-    def ask(self, question: str) -> str:
-        chunks = query_vectorstore(query=question, k=self.k)
+    def ask(self, question: str, debug=False) -> str:
+        results = self.db.similarity_search(query=question, k=self.k)
+        chunks = [doc.page_content for doc in results]
+
+        if debug:
+            print("\n🔍 Retrieved Chunks:\n" + "\n---\n".join(chunks))
+
         retrieved_context = "\n\n".join(chunks)
         prompt = self._format_prompt(question, retrieved_context)
         return self.llm.invoke(prompt)

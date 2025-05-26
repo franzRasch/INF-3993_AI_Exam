@@ -2,7 +2,7 @@ import os
 
 from local_loader import load_documents
 from splitter import smart_split_documents
-from vectorstore import store_documents
+from vectorstore import store_documents, store_documents_fresh
 from llm_ollama import ExamTrainer
 
 # --- CONFIG ---
@@ -27,10 +27,10 @@ def rag_pipeline():
     chunks = smart_split_documents(docs, is_exam=True)
 
     #Store chunks in the vector store
-    store_documents(chunks)
+    store_documents_fresh(chunks)
     print(f"Stored {len(chunks)} chunks into the vector store from {len(docs)} different PDFs.")
 
-    trainer = ExamTrainer(topic="advanced databases", model_name="qwen:1.8b")
+    trainer = ExamTrainer(topic="advanced distributed databases", model_name="qwen:1.8b")
     trainer.run()
 
 rag_pipeline()
