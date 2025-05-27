@@ -2,15 +2,15 @@ import os
 
 from local_loader import load_documents
 from splitter import smart_split_documents
-from vectorstore import store_documents
+from vectorstore import store_documents, store_documents
+from Flashcards_llm_ollama import FlashCards
 
 # --- CONFIG ---
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 CHROMA_DIR = "./chroma_db"
 
-
-def rag_pipeline():
-    # Step 1: get the path of the current script
+def insert_documents():
+        # Step 1: get the path of the current script
     current_dir = os.path.dirname(os.path.abspath(__file__))
 
     # Step 2: go one directory up
@@ -27,10 +27,14 @@ def rag_pipeline():
 
     # Store chunks in the vector store
     store_documents(chunks)
-    # for chunk in chunks:
-    #    print(f"chunk: {chunk}")
-
-    print(f"Stored {len(chunks)} chunks into the vector store.")
+    print(f"Stored {len(chunks)} chunks into the vector store from {len(docs)} different PDFs.")
+    return len(chunks)
 
 
-rag_pipeline()
+def rag_pipeline(number_of_questions):
+    k_similarity = 3
+    #k_similarity = insert_documents()
+    trainer = FlashCards(topic="advanced distributed databases", model_name="llama3.2:latest", k=k_similarity, number_of_questions=number_of_questions)
+    trainer.run()
+
+rag_pipeline(3)

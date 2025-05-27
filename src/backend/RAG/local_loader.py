@@ -1,7 +1,4 @@
 from langchain.docstore.document import Document
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_community.embeddings import HuggingFaceBgeEmbeddings
-from langchain_community.document_loaders import TextLoader
 
 import pymupdf
 import os
