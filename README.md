@@ -75,6 +75,16 @@ The config can be found in `.eslintrc.json`
 
 ### Backend
 
+#### RAG for Flashcards generation
+- **Ollama** CLI (used to run your local RAG model)
+- **Model**: `llama3.2:latest`
+
+ **Install Ollama**  
+   macOS / Linux (Homebrew):  
+   ```bash
+   brew install ollama-ai/brew/ollama
+   ```
+
 #### Run backend
 
 ```bash
@@ -102,3 +112,4 @@ npm start
 
 ```
 
+Using qwen1.8b local model
