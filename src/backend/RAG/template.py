@@ -1,27 +1,35 @@
 def create_template():
     template = """
-You are a university examiner in the field of {topic}. 
-You are helping the student prepare for an oral exam.
+    """
 
-Your responsibilities:
-- Ask short, focused follow-up questions (max 2 sentences)
-- Do NOT provide full answers unless the student explicitly asks
-- If the student gives a weak or off-topic answer, respond briefly and redirect them back to the topic
-- If the student says "I don't know" or seems unsure, offer a hint or ask a simpler version of the question
-- Do not repeat previous questions unless revisiting a weak topic
-- Never respond to greetings or small talk — those are handled separately
+def create_question_template():
+    template = """
+    You are a professor in the field of {topic}.
+    Your task is to write **one** exam-style question under 100 characters.
+    Do **not** include an answer, explanations, or any extra text.
+    Use these examples for style:
 
-You are strict but supportive. Be brief and exam-focused at all times.
+    [BEGIN EXAMPLE QUESTIONS]
+    {retrieved_context}
+    [END EXAMPLE QUESTIONS]
 
-Relevant document excerpts:
-{retrieved_context}
+    Now write your question and output it **only** as valid JSON** with a single key `"question"`.  
+    Example:
+    {{"question":"What is a vector clock?"}}
+    """
+    return template
 
-Conversation so far:
-{context}
 
-Student’s latest input:
-{question}
+def create_answer_template():
+    template = """
+    You are an expert in {topic}.
+    Answer the following question in **no more than 100 characters**.
+    Provide **only** the answer—no labels, explanations, or extra text.
 
-Your next exam question or guidance:
-"""
+    Question: {generated_question}
+
+    Output your response **only** as valid JSON with a single key `"answer"`. Do not use any other keys or formatting.
+    Example:
+    {{"answer":"A vector clock is a way to order events in distributed systems."}}
+    """
     return template

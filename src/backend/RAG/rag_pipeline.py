@@ -2,16 +2,15 @@ import os
 
 from local_loader import load_documents
 from splitter import smart_split_documents
-from vectorstore import store_documents, store_documents_fresh
+from vectorstore import store_documents, store_documents
 from llm_ollama import ExamTrainer
 
 # --- CONFIG ---
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 CHROMA_DIR = "./chroma_db"
 
-
-def rag_pipeline():
-    # Step 1: get the path of the current script
+def insert_documents():
+        # Step 1: get the path of the current script
     current_dir = os.path.dirname(os.path.abspath(__file__))
 
     # Step 2: go one directory up
@@ -27,10 +26,16 @@ def rag_pipeline():
     chunks = smart_split_documents(docs, is_exam=True)
 
     #Store chunks in the vector store
-    store_documents_fresh(chunks)
+    store_documents(chunks)
     print(f"Stored {len(chunks)} chunks into the vector store from {len(docs)} different PDFs.")
+    return len(chunks)
 
-    trainer = ExamTrainer(topic="advanced distributed databases", model_name="qwen:1.8b")
+
+def rag_pipeline():
+    #insert documents
+    number_of_chunks = 3
+    #number_of_chunks = insert_documents()
+    trainer = ExamTrainer(topic="advanced distributed databases", model_name="llama3.2:latest", k=number_of_chunks)
     trainer.run()
 
 rag_pipeline()
