@@ -1,10 +1,11 @@
 .services-section {
   padding: 4rem 2rem;
   text-align: center;
+
 }
 
 .highlight {
-  background: #e7d2f9;
+  background: var(--yellow-lime);
   padding: 0.2em 0.5em;
   font-size: 3rem;
   font-weight: bold;
@@ -16,4 +17,5 @@
   justify-content: center;
   flex-wrap: wrap;
   gap: 2rem;
+  padding-bottom: 5rem;
 }

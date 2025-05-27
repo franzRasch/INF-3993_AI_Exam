@@ -1,7 +1,7 @@
 .hero {
   background-size: cover;
   background-position: center;
-  color: white;
+  color: var(--main-text-color);
   text-align: center;
   padding: 100px 20px;
 }

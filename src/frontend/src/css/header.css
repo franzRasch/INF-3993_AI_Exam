@@ -3,12 +3,31 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  color: white;
+  color: var(--main-text-color);
+  background-color: var(--light-pink);
+}
+
+.header-left,
+.nav-center,
+.header-right {
+  display: flex;
+  align-items: center;
 }
 
 .logo {
-  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.3rem;
   text-transform: uppercase;
+  font-weight: 600;
+}
+
+.logo-icon {
+  width: 40px;
+  height: auto;
+  justify-self: center;
+  padding-right: 2px;
 }
 
 nav ul {
@@ -28,5 +47,34 @@ nav ul {
   border: none;
   padding: 0.5rem 1rem;
   font-weight: bold;
+  cursor: pointer;
+}
+
+/* Center nav section */
+.nav-center {
+  flex: 1;
+  justify-content: center;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  padding: 0;
+  margin: 0;
+}
+
+/* Right side CTA */
+.header-right {
+  gap: 1rem;
+}
+
+.cta-button {
+  background-color: var(--electric-blue);
+  color: white;
+  font-weight: bold;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
   cursor: pointer;
 }
