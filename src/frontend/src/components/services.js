@@ -14,7 +14,7 @@ export default function ServicesSection() {
       image: flashcardsImg,
       color: '#C4F4F8',
       highlightColor: '#A0EBF4',
-      route: '/'
+      route: '/',
     },
     {
       titleTop: 'Ask',
@@ -22,7 +22,7 @@ export default function ServicesSection() {
       image: questionsImg,
       color: '#F9D8D8',
       highlightColor: '#F4BFC2',
-      route: '/'
+      route: '/',
     },
     {
       titleTop: 'Procrastination',
@@ -30,18 +30,19 @@ export default function ServicesSection() {
       image: procrastinationImg,
       color: '#FFF495',
       highlightColor: '#FFE850',
-      route: '/'
-    }
+      route: '/',
+    },
   ];
 
   return (
-    <section className="services-section">
-      <h2><span className="highlight">Services</span></h2>
+    <section>
+      {/* <h2><span className="highlight">Services</span></h2>
       <div className="card-container">
         {services.map(service => (
           <ServiceCard key={service.route} {...service} />
         ))}
-      </div>
+      </div> */}
+      <h2>Test Mode</h2>
     </section>
   );
 }

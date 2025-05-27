@@ -1,12 +1,11 @@
 .hero {
-
   background-size: cover;
   background-position: center;
   color: white;
   text-align: center;
   padding: 100px 20px;
 }
-  
+
 .text h1 {
   font-size: 3rem;
   line-height: 1.2;

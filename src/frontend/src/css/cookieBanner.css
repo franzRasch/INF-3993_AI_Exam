@@ -1,21 +1,20 @@
 .cookie-banner {
-    position: fixed;
-    bottom: 1rem;
-    right: 1rem;
-    background: white;
-    border: 2px solid black;
-    padding: 1rem;
-    border-radius: 8px;
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    z-index: 999;
-  }
-  
-  .cookie-buttons button {
-    margin-left: 0.5rem;
-    padding: 0.5rem 1rem;
-    border: 1px solid black;
-    cursor: pointer;
-  }
-  
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  background: white;
+  border: 2px solid black;
+  padding: 1rem;
+  border-radius: 8px;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  z-index: 999;
+}
+
+.cookie-buttons button {
+  margin-left: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid black;
+  cursor: pointer;
+}

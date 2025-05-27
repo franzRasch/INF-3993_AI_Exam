@@ -12,7 +12,8 @@ export default function ServiceCard({ titleTop, titleBottom, image, color, highl
       </div>
       <div className="card-text">
         <h3>
-          {titleTop}<br />
+          {titleTop}
+          <br />
           <span style={{ backgroundColor: highlightColor }}>{titleBottom}</span>
         </h3>
       </div>

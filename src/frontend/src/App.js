@@ -6,17 +6,14 @@ import Hero from './components/hero';
 import CookieBanner from './components/cookieBanner';
 import ServicesSection from './components/services';
 
-
 function App() {
   return (
     <div className="App">
       <Header />
       <Hero />
       <CookieBanner />
-      {/* <ServicesSection /> */}
-
+      <ServicesSection />
     </div>
-    
   );
 }
 

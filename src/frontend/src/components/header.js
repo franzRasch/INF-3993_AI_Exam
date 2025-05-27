@@ -4,7 +4,9 @@ import '../css/header.css';
 export default function Header() {
   return (
     <header className="header">
-      <div className="logo">Your <strong>AI</strong> Tutor</div>
+      <div className="logo">
+        Your <strong>AI</strong> Tutor
+      </div>
       <nav>
         <ul>
           <li>Flashcard generation</li>

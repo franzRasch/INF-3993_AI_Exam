@@ -1,20 +1,19 @@
 .services-section {
-    padding: 4rem 2rem;
-    text-align: center;
-  }
-  
-  .highlight {
-    background: #E7D2F9;
-    padding: 0.2em 0.5em;
-    font-size: 3rem;
-    font-weight: bold;
-    border-radius: 0.3em;
-  }
-  .card-container {
-    margin-top: 2rem;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 2rem;
-  }
-  
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.highlight {
+  background: #e7d2f9;
+  padding: 0.2em 0.5em;
+  font-size: 3rem;
+  font-weight: bold;
+  border-radius: 0.3em;
+}
+.card-container {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
