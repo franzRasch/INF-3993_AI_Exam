@@ -5,6 +5,7 @@ import Header from './components/header';
 import Hero from './components/hero';
 import CookieBanner from './components/cookieBanner';
 
+
 function App() {
   return (
     <div className="App">
