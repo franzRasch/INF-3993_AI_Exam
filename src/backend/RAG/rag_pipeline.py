@@ -3,7 +3,7 @@ import os
 from local_loader import load_documents
 from splitter import smart_split_documents
 from vectorstore import store_documents, store_documents
-from llm_ollama import ExamTrainer
+from Flashcards_llm_ollama import FlashCards
 
 # --- CONFIG ---
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
@@ -31,11 +31,10 @@ def insert_documents():
     return len(chunks)
 
 
-def rag_pipeline():
-    #insert documents
-    number_of_chunks = 3
-    #number_of_chunks = insert_documents()
-    trainer = ExamTrainer(topic="advanced distributed databases", model_name="llama3.2:latest", k=number_of_chunks)
+def rag_pipeline(number_of_questions):
+    k_similarity = 3
+    #k_similarity = insert_documents()
+    trainer = FlashCards(topic="advanced distributed databases", model_name="llama3.2:latest", k=k_similarity, number_of_questions=number_of_questions)
     trainer.run()
 
-rag_pipeline()
+rag_pipeline(3)

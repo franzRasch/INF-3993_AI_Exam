@@ -4,9 +4,10 @@ from template import create_template, create_question_template, create_answer_te
 from vectorstore import load_vectorstore
 
 
-class ExamTrainer:
-    def __init__(self, topic: str, model_name="llama3.2:latest", k: int = 3):
+class FlashCards:
+    def __init__(self, topic: str, model_name="llama3.2:latest", k: int = 3, number_of_questions: int = 2):
         self.topic = topic
+        self.number_of_questions = number_of_questions
         self.k = k
         self.context = ""
         self.question_and_answer = []
@@ -17,10 +18,9 @@ class ExamTrainer:
         self.prompt_template = ChatPromptTemplate.from_template(template)
         self.db = load_vectorstore()
 
-    def _format_prompt(self, number_of_questions: str, retrieved_context: str) -> str:
+    def _format_prompt(self, retrieved_context: str) -> str:
         return self.prompt_template.format_prompt(
             topic=self.topic,
-            number_of_questions = number_of_questions,
             context=self.context,
             retrieved_context=retrieved_context,
         ).to_string()
@@ -53,7 +53,7 @@ class ExamTrainer:
             full_output += chunk
         return full_output
     
-    def run_q_and_a(self, number_of_questions):
+    def run_flashcards(self, number_of_questions):
         for i in range(number_of_questions):
             question = self.generate_question()
             answer = self.answer(f"{question}")
@@ -61,23 +61,10 @@ class ExamTrainer:
             self.question_and_answer.append(qa_pair)
         print(self.question_and_answer)
 
-
     def run(self):
-        number_of_questions = 2
-        print(f"\n🧠 Welcome to the AI Examiner on '{self.topic}'!\nType 'exit' to quit.\n")
-        self.run_q_and_a(number_of_questions)
+        self.run_flashcards(self.number_of_questions)
         return
-        #print(f"\n🤖 {ai_response.strip()}")
 
-        while True:
-            user_input = input("\nYou: ")
-            if user_input.lower() == "exit" or "quit" or "bye":
-                print("👋 Exiting the exam simulator. Good luck studying!")
-                break
-
-            self.update_context(user_input, ai_response)
-            ai_response = self.ask(self.topic)  # continue generating new questions from topic
-            #print(f"\n🤖 {ai_response.strip()}")
 
 
 
