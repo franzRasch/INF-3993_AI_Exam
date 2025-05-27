@@ -11,7 +11,6 @@ function App() {
     <div className="App">
       <Header />
       <Hero />
-      <CookieBanner />
       <ServicesSection />
     </div>
   );

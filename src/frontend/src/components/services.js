@@ -1,5 +1,5 @@
 import React from 'react';
-import ServiceCard from './card';
+import ServiceCard from './card.js';
 import '../css/services.css';
 
 import flashcardsImg from '../assets/doodles/15.svg';
@@ -36,13 +36,14 @@ export default function ServicesSection() {
 
   return (
     <section>
-      {/* <h2><span className="highlight">Services</span></h2>
+      <h2>
+        <span className="highlight">Services</span>
+      </h2>
       <div className="card-container">
         {services.map(service => (
           <ServiceCard key={service.route} {...service} />
         ))}
-      </div> */}
-      <h2>Test Mode</h2>
+      </div>
     </section>
   );
 }
