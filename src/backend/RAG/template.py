@@ -13,6 +13,11 @@ def create_question_template():
     {retrieved_context}
     [END EXAMPLE QUESTIONS]
 
+    Do not write any question that has already been asked, listed below.
+    [BEGIN ALREADY ASKED QUESTIONS]
+    {already_asked_questions}
+    [END ALREADY ASKED QUESTIONS]
+
     Now write your question and output it **only** as valid JSON** with a single key `"question"`.  
     Example:
     {{"question":"What is a vector clock?"}}
