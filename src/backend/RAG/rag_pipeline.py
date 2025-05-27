@@ -34,7 +34,12 @@ def insert_documents():
 def rag_pipeline(number_of_questions):
     k_similarity = 3
     #k_similarity = insert_documents()
-    trainer = FlashCards(topic="advanced distributed databases", model_name="llama3.2:latest", k=k_similarity, number_of_questions=number_of_questions)
+    trainer = FlashCards(
+        topic="advanced distributed databases", 
+        model_name="llama3.2:latest",
+        k=k_similarity, 
+        number_of_questions=number_of_questions
+    )
     trainer.run()
 
 rag_pipeline(3)
