@@ -1,0 +1,53 @@
+.hero {
+
+  background-size: cover;
+  background-position: center;
+  color: white;
+  text-align: center;
+  padding: 100px 20px;
+}
+  
+.text h1 {
+  font-size: 3rem;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.badges {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.greenBadge {
+  background-color: #d4f2c3;
+  padding: 0.5rem 1rem;
+  border-radius: 30px;
+  font-weight: bold;
+}
+
+.pinkStar {
+  background-color: #ff4081;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  color: white;
+  font-weight: bold;
+}
+
+.heroImage {
+  width: 100%;
+  max-width: 1000px;
+  border-radius: 1rem;
+  margin-top: 2rem;
+}
+.hero h1 {
+  font-size: 4rem;
+  text-transform: uppercase;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  margin-top: 20px;
+}
