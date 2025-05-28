@@ -1,10 +1,24 @@
 TTFB
 venv
 uvicorn
+Gitmojis
+Hugginface
+vectorstore
+vectorstores
+LANGSMITH
+llms
+dotenv
+ollama
+qwen
 
 Skjalg
 Slubowski
 Marie
 Stenhaug
-Frans
+Franz
 Ingebrigtsen
+
+huggingface
+docstore
+vectorstore
+vectorstores
