@@ -1,7 +1,7 @@
-from fastapi import APIRouter
 from pydantic import BaseModel
 from fastapi import APIRouter, UploadFile, File, HTTPException
 from typing import List
+from RAG.oral_examinator import OralExaminator
 
 
 router = APIRouter()
@@ -9,6 +9,11 @@ router = APIRouter()
 
 class ExampleDataInput(BaseModel):
     text: str
+
+
+class OralQuestionRequest(BaseModel):
+    topic: str
+    number_of_questions: int = 5
 
 
 @router.post("/uploadfile")
@@ -28,12 +33,27 @@ async def upload_pdf(files: List[UploadFile] = File(...)):
 
 
 @router.post("/examplePost")
-async def examplePost(exampleData: exampleDataInput):
+async def examplePost(exampleData: ExampleDataInput):
     # Replace this with your NLP pipeline later
     return {"message": f"Received syllabus with {len(exampleData.text)} characters"}
 
 
 @router.get("/exampleGet")
-async def example(exampleData: exampleDataInput):
+async def example(exampleData: ExampleDataInput):
     # Replace this with your NLP pipeline later
     return {"message": f"Received syllabus with {len(exampleData.text)} characters"}
+
+
+@router.post("/oral/questions")
+async def generate_oral_questions(request: OralQuestionRequest):
+    print(
+        f"Generating {request.number_of_questions} questions for topic: {request.topic}"
+    )
+    examinator = OralExaminator(
+        topic=request.topic, number_of_questions=request.number_of_questions
+    )
+    questions = examinator.generate_questions()
+
+    print(f"Generated questions: {questions}")
+
+    return {"questions": questions}
