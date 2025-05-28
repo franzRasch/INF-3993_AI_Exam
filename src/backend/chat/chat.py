@@ -1,6 +1,6 @@
 from langchain_ollama import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
-from template import chat_template
+from .template import chat_template
 
 class Chat:
     def __init__(self, topic: str, model_name="llama3.2:latest"):
@@ -43,11 +43,6 @@ class Chat:
                 pass
         
     
-chat = Chat(
-    topic="advanced distributed databases", 
-    model_name="llama3.2:latest",
-)
-chat.run()
 
 
 
