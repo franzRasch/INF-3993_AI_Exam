@@ -8,10 +8,7 @@ from chat.chat import Chat
 import json
 from fastapi import Body, HTTPException
 
-
-
 router = APIRouter()
-
 
 class ExampleDataInput(BaseModel):
     text: str
