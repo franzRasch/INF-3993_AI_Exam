@@ -30,17 +30,6 @@ class Chat:
             full_output += chunk
         self.context += f"\nYou: {user_input}\nChatbot: {full_output.strip()}"
         return True
-    
-    def run(self):
-        while True:
-            user_input = input("\nYou: ")
-            if user_input.lower() in ["exit", "quit", "stop"]:
-                print("Exiting chat.")
-                break
-            
-            self.context = user_input
-            while chat.ask(user_input) is not True:
-                pass
         
     
 
