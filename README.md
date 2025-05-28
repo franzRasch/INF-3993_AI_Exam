@@ -33,19 +33,27 @@ See [TOOLS.md](TOOLS.md) for a list of tools used in the project.
    pip install -r requirements.txt
    ```
 
-   4 Run "node -v" to check for node js, if you don't have node: install it
+   If you get an error try running the following command first:
+
+   ```bash
+   pip install --upgrade setuptools wheel
+   ```
+
+4. Run "node -v" to check for node js, if you don't have node: install it
 
 ### Backend
 
 #### RAG for Flashcards generation
+
 - **Ollama** CLI (used to run your local RAG model)
 - **Model**: `llama3.2:latest`
 
- **Install Ollama**  
-   macOS / Linux (Homebrew):  
-   ```bash
-   brew install ollama-ai/brew/ollama
-   ```
+  **Install Ollama**
+  macOS / Linux (Homebrew):
+
+  ```bash
+  brew install ollama-ai/brew/ollama
+  ```
 
 #### Run backend
 
@@ -75,3 +83,7 @@ npm start
 ```
 
 Using qwen1.8b local model
+
+```
+
+```
