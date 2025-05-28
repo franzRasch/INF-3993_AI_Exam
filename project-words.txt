@@ -22,3 +22,5 @@ huggingface
 docstore
 vectorstore
 vectorstores
+
+examinator
