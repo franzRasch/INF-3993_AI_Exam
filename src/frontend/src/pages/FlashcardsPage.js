@@ -26,9 +26,40 @@ const flashcards = [
   { front: 'What is props?', back: 'Inputs passed into components' },
   { front: 'What is JSX?', back: 'A syntax extension for JavaScript' },
 ];
-
 export default function FlashcardsPage() {
   const [userInput, setUserInput] = useState('');
+
+  const handleSubmit = async () => {
+    console.log('Clicked submit');
+    try {
+      const response = await fetch('http://localhost:8000/flashcards/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ user_input: userInput }), // ✅ use userInput here
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch flashcards');
+      }
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder('utf-8');
+      let result = '';
+
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        result += decoder.decode(value);
+      }
+
+      console.log('Raw stream result:', result);
+    } catch (err) {
+      console.error('Error:', err.message);
+    }
+  };
+
   return (
     <div className="flashcards-page">
       <h1 className="flashcard-title">Create Flashcards!</h1>
@@ -36,7 +67,7 @@ export default function FlashcardsPage() {
         <label htmlFor="userInput">Enter a number:</label>
         <div className="input-group">
           <input type="text" id="userInput" value={userInput} onChange={e => setUserInput(e.target.value)} />
-          <button className="submit-button" onClick={() => alert(`Submitted: ${userInput}`)}>
+          <button className="submit-button" onClick={handleSubmit}>
             Enter
           </button>
         </div>
