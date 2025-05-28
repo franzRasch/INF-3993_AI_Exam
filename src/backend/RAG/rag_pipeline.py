@@ -3,7 +3,7 @@ import os
 from local_loader import load_documents
 from splitter import smart_split_documents
 from vectorstore import store_documents, store_documents
-from Flashcards_llm_ollama import FlashCards
+from RAG.Flashcards_llm_ollama import FlashCards
 
 # --- CONFIG ---
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
