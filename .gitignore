@@ -1,8 +1,6 @@
 .DS_Store
 ./venv
 env/
-
-
 /venv
 *.vscode
 # Ignore db and cache files
