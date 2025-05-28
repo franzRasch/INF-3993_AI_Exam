@@ -2,6 +2,7 @@ def create_template():
     template = """
     """
 
+
 def create_question_template():
     template = """
     You are a professor in the field of {topic}.
@@ -36,5 +37,24 @@ def create_answer_template():
     Output your response **only** as valid JSON with a single key `"answer"`. Do not use any other keys or formatting.
     Example:
     {{"answer":"A vector clock is a way to order events in distributed systems."}}
+    """
+    return template
+
+
+def create_answer_review_template():
+    template = """
+    You are an examiner in the field of {topic}.
+    Your task is to review the answer to the following question, as if it was given by a student in an oral exam.
+    The review should be based on the {retrieved_context}.
+
+    Question: {generated_question}
+    Answer: {student_answer}
+
+    Review the answer and provide feedback in **no more than 100 characters**.
+    Review should contain passed/not passed and a short reason.
+    Provide **only** the feedback—no labels, explanations, or extra text.
+    Output your response **only** as valid JSON with a single key `"feedback"`. Do not use any other keys or formatting.
+    Example:
+    {{"feedback":"Passed: The answer is correct and concise."}}
     """
     return template
