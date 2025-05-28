@@ -9,7 +9,6 @@ const Hero = () => (
         <br />
         <strong>AI supported learning</strong>
       </h1>
-      {/* <Badge text="Buon Appetito ✌️" /> */}
       <p className="subtitle">A project from INF-3993</p>
     </div>
   </section>
