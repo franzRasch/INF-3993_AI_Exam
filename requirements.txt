@@ -11,3 +11,4 @@ ollama
 langchain
 langchain-openai
 openai-whisper
+python-multipart
