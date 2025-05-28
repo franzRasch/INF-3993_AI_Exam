@@ -1,5 +1,5 @@
-from RAG.template import create_answer_template
-from RAG.question_generator_base import QuestionGeneratorBase
+from template import create_answer_template
+from question_generator_base import QuestionGeneratorBase
 
 
 class FlashCards(QuestionGeneratorBase):
