@@ -14,7 +14,7 @@ export default function ServicesSection() {
       image: flashcardsImg,
       color: '#C4F4F8',
       highlightColor: '#A0EBF4',
-      route: '/',
+      route: '/flashcards',
     },
     {
       titleTop: 'Ask',
@@ -22,7 +22,7 @@ export default function ServicesSection() {
       image: questionsImg,
       color: '#F9D8D8',
       highlightColor: '#F4BFC2',
-      route: '/',
+      route: '/questions',
     },
     {
       titleTop: 'Procrastination',
@@ -30,7 +30,7 @@ export default function ServicesSection() {
       image: procrastinationImg,
       color: '#FFF495',
       highlightColor: '#FFE850',
-      route: '/',
+      route: '/procrastination',
     },
   ];
 

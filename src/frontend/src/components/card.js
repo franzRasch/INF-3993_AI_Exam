@@ -6,7 +6,7 @@ export default function ServiceCard({ titleTop, titleBottom, image, color, highl
   const navigate = useNavigate();
 
   return (
-    <div className="service-card" onClick={() => navigate(route)}>
+    <div className="service-card" onClick={() => navigate(route)} style={{ cursor: 'pointer' }}>
       <div className="card-image" style={{ backgroundColor: color }}>
         <img src={image} alt={`${titleTop} ${titleBottom}`} />
       </div>
