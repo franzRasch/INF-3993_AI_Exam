@@ -12,11 +12,12 @@ def remove_intro_until_task(text: str) -> str:
     index = text.find(marker)
     return text[index:] if index != -1 else text
 
+
 def remove_task_and_question_prefix(text: str) -> str:
     """
     Removes prefixes like 'Task 1: b)' or 'Task 2: a)' from the beginning of the text.
     """
-    return re.sub(r'^\s*Task\s*\d+:\s*[a-h]\)\s*', '', text, flags=re.IGNORECASE)
+    return re.sub(r"^\s*Task\s*\d+:\s*[a-h]\)\s*", "", text, flags=re.IGNORECASE)
 
 
 def split_documents_by_exam_question(documents: List[Document]) -> List[Document]:
@@ -30,7 +31,7 @@ def split_documents_by_exam_question(documents: List[Document]) -> List[Document
         cleaned_text = remove_intro_until_task(doc.page_content)
 
         # Split by each task (e.g., Task 1:, Task 2:) using a regex
-        task_blocks = re.split(r'(Task\s*\d+:)', cleaned_text)
+        task_blocks = re.split(r"(Task\s*\d+:)", cleaned_text)
 
         # Combine the task label and content back together
         tasks = []
@@ -41,11 +42,13 @@ def split_documents_by_exam_question(documents: List[Document]) -> List[Document
 
         for task_label, task_content in tasks:
             # Split task content into individual questions based on a), b), etc.
-            parts = re.split(r'\n?\s*([a-h]\))', task_content)
+            parts = re.split(r"\n?\s*([a-h]\))", task_content)
 
             if len(parts) <= 1:
                 full_chunk = f"{task_label} {task_content}".strip()
-                question_chunks.append(Document(page_content=full_chunk, metadata=doc.metadata))
+                question_chunks.append(
+                    Document(page_content=full_chunk, metadata=doc.metadata)
+                )
                 continue
 
             # Recombine: prefix + question label + question content
@@ -56,12 +59,16 @@ def split_documents_by_exam_question(documents: List[Document]) -> List[Document
                 chunk_text = f"{prefix} {label} {content}".strip()
                 chunk_text = remove_task_and_question_prefix(chunk_text)
 
-                question_chunks.append(Document(page_content=chunk_text, metadata=doc.metadata))
+                question_chunks.append(
+                    Document(page_content=chunk_text, metadata=doc.metadata)
+                )
 
     return question_chunks
 
 
-def split_documents(documents: List[Document], chunk_size=1000, overlap=200) -> List[Document]:
+def split_documents(
+    documents: List[Document], chunk_size=1000, overlap=200
+) -> List[Document]:
     """
     Fallback splitter for general-purpose documents using RecursiveCharacterTextSplitter.
     """
@@ -74,7 +81,9 @@ def split_documents(documents: List[Document], chunk_size=1000, overlap=200) -> 
     return text_splitter.split_documents(documents)
 
 
-def smart_split_documents(documents: List[Document], is_exam: bool = False) -> List[Document]:
+def smart_split_documents(
+    documents: List[Document], is_exam: bool = False
+) -> List[Document]:
     """
     Smart splitting: If it's an exam, split by task and question; otherwise, use recursive chunking.
     """
