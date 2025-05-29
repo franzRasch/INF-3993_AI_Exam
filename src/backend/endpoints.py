@@ -5,6 +5,7 @@ from typing import List
 from RAG.oral_examinator import OralExaminator
 from starlette.responses import StreamingResponse
 from chat.chat import Chat
+from ait_logger import logger
 
 router = APIRouter()
 
@@ -124,6 +125,8 @@ async def evaluate_oral_answer(
     try:
         return json.loads(feedback)
     except json.JSONDecodeError as exc:
+        logger.error("Failed to parse feedback: %s", feedback)
+
         raise HTTPException(
             status_code=500,
             detail=f"Failed to parse feedback: {feedback}",

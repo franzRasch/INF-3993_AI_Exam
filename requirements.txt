@@ -15,3 +15,4 @@ torch==2.3.0
 ollama
 openai-whisper
 python-multipart
+colorlog

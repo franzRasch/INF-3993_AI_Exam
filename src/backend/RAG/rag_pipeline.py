@@ -1,9 +1,9 @@
-import os
-
 from RAG.local_loader import load_documents
 from RAG.splitter import smart_split_documents
 from RAG.vectorstore import store_documents, store_documents
 from RAG.Flashcards_llm_ollama import FlashCards
+from backend.ait_logger import logger
+import os
 
 # --- CONFIG ---
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
@@ -28,20 +28,21 @@ def insert_documents():
 
     # Store chunks in the vector store
     store_documents(chunks)
-    print(
-        f"Stored {len(chunks)} chunks into the vector store from {len(docs)} different PDFs."
+    logger.info(
+        "Stored %d chunks into the vector store from %d different PDFs.",
+        len(chunks),
+        len(docs),
     )
     return len(chunks)
 
 
-def rag_pipeline(number_of_questions):    
+def rag_pipeline(number_of_questions):
     k_similarity = 3
-    #k_similarity = insert_documents()
     trainer = FlashCards(
-        topic="advanced distributed databases", 
+        topic="advanced distributed databases",
         model_name="llama3.2:latest",
-        k=k_similarity, 
-        number_of_questions=number_of_questions
+        k=k_similarity,
+        number_of_questions=number_of_questions,
     )
     trainer.run()
 
