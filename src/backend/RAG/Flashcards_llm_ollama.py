@@ -64,9 +64,3 @@ class FlashCards:
     def run(self):
         self.run_flashcards(self.number_of_questions)
         return
-
-
-
-
-
-

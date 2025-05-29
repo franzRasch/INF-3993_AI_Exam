@@ -7,6 +7,8 @@ from typing import List
 from chat.chat import Chat
 import json
 from fastapi import Body, HTTPException
+from RAG.rag_pipeline import rag_pipeline, insert_documents
+
 
 router = APIRouter()
 
@@ -21,6 +23,8 @@ chat = Chat(
         topic="advanced distributed databases", 
         model_name="llama3.2:latest",
     )
+
+
 
 @router.post("/uploadfile")
 async def upload_pdf(files: List[UploadFile] = File(...)):
