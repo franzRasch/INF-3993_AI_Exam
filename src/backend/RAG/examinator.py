@@ -3,12 +3,11 @@ from RAG.template import create_answer_review_template
 from RAG.question_generator_base import QuestionGeneratorBase
 import whisper
 from fastapi import UploadFile
-from starlette.datastructures import UploadFile as StarletteUploadFile
 import os
 import tempfile
 
 
-class OralExaminator(QuestionGeneratorBase):
+class Examinator(QuestionGeneratorBase):
     """A class for conducting oral examinations using a language model.
 
     Args:
@@ -67,8 +66,8 @@ class OralExaminator(QuestionGeneratorBase):
         finally:
             os.remove(tmp_path)
 
-    def review_answer(self, question: str, student_answer: UploadFile) -> str:
-        """Reviews a student's answer to a question.
+    def review_oral_answer(self, question: str, student_answer: UploadFile) -> str:
+        """Reviews a student's oral answer to a question.
 
         Args:
             question (str): The question being answered.
@@ -84,6 +83,30 @@ class OralExaminator(QuestionGeneratorBase):
         prompt = create_answer_review_template().format(
             topic=self.topic,
             student_answer=transcribed_answer,
+            generated_question=question,
+            retrieved_context=self.context,
+        )
+        full_output = ""
+
+        for chunk in self.llm.stream(prompt):
+            full_output += chunk
+
+        return full_output
+
+    def review_text_answer(self, question: str, student_answer: str) -> str:
+        """Reviews a student's text answer to a question.
+
+        Args:
+            question (str): The question being answered.
+            student_answer (str): The student's answer.
+
+        Returns:
+            str: The feedback on the student's answer.
+        """
+
+        prompt = create_answer_review_template().format(
+            topic=self.topic,
+            student_answer=student_answer,
             generated_question=question,
             retrieved_context=self.context,
         )

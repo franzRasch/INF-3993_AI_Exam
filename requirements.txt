@@ -12,6 +12,7 @@ langchain-openai
 pydantic==2.11.4
 pymupdf==1.25.5
 torch==2.3.0
+edge-tts>=6.1.10
 ollama
 openai-whisper
 python-multipart
