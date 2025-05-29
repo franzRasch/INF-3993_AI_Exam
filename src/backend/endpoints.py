@@ -12,6 +12,12 @@ class ExampleDataInput(BaseModel):
 
 
 class OralQuestionRequest(BaseModel):
+    """Request model for generating oral questions.
+
+    Args:
+        BaseModel (pydantic.BaseModel): The base model class.
+    """
+
     topic: str
     number_of_questions: int = 5
 
@@ -46,6 +52,17 @@ async def example(exampleData: ExampleDataInput):
 
 @router.post("/oral/questions")
 async def generate_oral_questions(request: OralQuestionRequest):
+    """Generate oral questions based on the provided topic.
+
+    Args:
+        request (OralQuestionRequest): The topic and number of questions.
+
+    Raises:
+        HTTPException: If question generation fails.
+
+    Returns:
+        List[str]: A list of generated oral questions.
+    """
     examinator = OralExaminator(
         topic=request.topic, number_of_questions=request.number_of_questions
     )
