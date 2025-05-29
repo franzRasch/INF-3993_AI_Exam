@@ -187,7 +187,7 @@ async def flashcards_create(user_input: str = Body(..., embed=True)):
     return StreamingResponse(event_generator(), media_type="application/x-ndjson")
 
 
-@router.post("/tts/tts")
+@router.post("/tts/text-to-speech")
 async def text_to_speech(text: str = Body(..., embed=True)):
     """Convert text to speech and return the audio file.
 
