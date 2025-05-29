@@ -2,7 +2,7 @@ from pydantic import BaseModel
 from fastapi import APIRouter, UploadFile, File, HTTPException, Form, Body
 import json
 from typing import List
-from RAG.oral_examinator import OralExaminator
+from RAG.examinator import Examinator
 from starlette.responses import StreamingResponse
 from chat.chat import Chat
 from ait_logger import logger
@@ -96,7 +96,7 @@ async def generate_oral_questions(request: OralQuestionRequest):
     Returns:
         List[str]: A list of generated oral questions.
     """
-    examinator = OralExaminator(
+    examinator = Examinator(
         topic=request.topic, number_of_questions=request.number_of_questions
     )
     questions = examinator.generate_questions()
@@ -104,7 +104,7 @@ async def generate_oral_questions(request: OralQuestionRequest):
     return {"questions": questions}
 
 
-@router.post("/oral/evaluate")
+@router.post("/evaluate/oral")
 async def evaluate_oral_answer(
     topic: str = Form(...),
     question: str = Form(...),
@@ -121,10 +121,45 @@ async def evaluate_oral_answer(
         HTTPException: If evaluation fails.
 
     Returns:
-        str: The feedback on the student's answer, formatted as JSON.
+        dict: The feedback on the student's answer, formatted as JSON.
     """
-    examinator = OralExaminator(topic=topic)
+    examinator = Examinator(topic=topic)
     feedback = examinator.review_oral_answer(question=question, student_answer=audio)
+
+    try:
+        return json.loads(feedback)
+    except json.JSONDecodeError as exc:
+        logger.error("Failed to parse feedback: %s", feedback)
+
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to parse feedback: {feedback}",
+        ) from exc
+
+
+@router.post("/evaluate/text")
+async def evaluate_text_answer(
+    topic: str = Form(...),
+    question: str = Form(...),
+    student_answer: str = Form(...),
+) -> dict:
+    """Evaluate a student's text answer to a question.
+
+    Args:
+        topic (str, optional): The topic of the question.
+        question (str, optional): The question being answered.
+        student_answer (str, optional): The student's answer.
+
+    Raises:
+        HTTPException: If evaluation fails.
+
+    Returns:
+        dict: The feedback on the student's answer.
+    """
+    examinator = Examinator(topic=topic)
+    feedback = examinator.review_text_answer(
+        question=question, student_answer=student_answer
+    )
 
     try:
         return json.loads(feedback)
