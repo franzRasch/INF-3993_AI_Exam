@@ -11,7 +11,7 @@ langchain_ollama==0.3.2
 langchain-openai
 pydantic==2.11.4
 pymupdf==1.25.5
-torch==2.2.2
+torch==2.3.2
 ollama
 openai-whisper
 python-multipart
