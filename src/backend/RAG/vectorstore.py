@@ -14,6 +14,7 @@ def store_documents(docs, path="chroma_db"):
     embedder = get_embedder()
     Chroma.from_documents(documents=docs, embedding=embedder, persist_directory=path)
 
+
 def store_documents_append(docs, path="chroma_db"):
     embedder = get_embedder()
     try:
@@ -21,11 +22,11 @@ def store_documents_append(docs, path="chroma_db"):
         db.add_documents(docs)
     except:
         # If the DB doesn't exist yet, create it
-        db = Chroma.from_documents(documents=docs, embedding=embedder, persist_directory=path)
+        db = Chroma.from_documents(
+            documents=docs, embedding=embedder, persist_directory=path
+        )
     db.persist()
 
 
 def load_vectorstore(path="chroma_db"):
     return Chroma(persist_directory=path, embedding_function=get_embedder())
-
-
