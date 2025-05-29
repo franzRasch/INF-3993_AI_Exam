@@ -1,5 +1,6 @@
 from pydantic import BaseModel
-from fastapi import APIRouter, UploadFile, File, HTTPException
+from fastapi import APIRouter, UploadFile, File, HTTPException, Form
+import json
 from typing import List
 from RAG.oral_examinator import OralExaminator
 
@@ -69,3 +70,34 @@ async def generate_oral_questions(request: OralQuestionRequest):
     questions = examinator.generate_questions()
 
     return {"questions": questions}
+
+
+@router.post("/oral/evaluate")
+async def evaluate_oral_answer(
+    topic: str = Form(...),
+    question: str = Form(...),
+    audio: UploadFile = File(...),
+):
+    """Evaluate a student's oral answer to a question.
+
+    Args:
+        topic (str, optional): The topic of the question.
+        question (str, optional): The question being answered.
+        audio (UploadFile, optional): The audio file containing the student's answer.
+
+    Raises:
+        HTTPException: If evaluation fails.
+
+    Returns:
+        str: The feedback on the student's answer, formatted as JSON.
+    """
+    examinator = OralExaminator(topic=topic)
+    feedback = examinator.review_answer(question=question, student_answer=audio)
+
+    try:
+        return json.loads(feedback)
+    except json.JSONDecodeError as exc:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to parse feedback: {feedback}",
+        ) from exc
