@@ -33,11 +33,11 @@ See [TOOLS.md](TOOLS.md) for a list of tools used in the project.
    pip install -r requirements.txt
    ```
 
-   If you get an error try running the following command first:
+   You also need to have `ffmpeg` installed.
 
-   ```bash
-   pip install --upgrade setuptools wheel
-   ```
+   - **macOS**: `brew install ffmpeg`
+   - **Linux**: `sudo apt install ffmpeg`
+   - **Windows**: Download from [FFmpeg](https://ffmpeg.org/download.html) and add it to your PATH.
 
 4. Run "node -v" to check for node js, if you don't have node: install it
 
