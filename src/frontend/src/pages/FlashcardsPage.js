@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import '../css/FlashcardsPage.css';
+import { FaVolumeUp, FaMicrophone, FaSyncAlt } from 'react-icons/fa';
+
 import icon1 from '../assets/doodles/11.svg';
 import icon2 from '../assets/doodles/12.svg';
 import icon3 from '../assets/doodles/13.svg';
@@ -17,27 +19,24 @@ const colorSet = [
   { base: 'var(--peach-cream)', highlight: 'var(--soft-yellow)' },
 ];
 
-const flashcards = [
-  { front: 'What is React?', back: 'A JS library for building UIs' },
-  { front: 'What is JSX?', back: 'A syntax extension for JavaScript' },
-  { front: 'What is a hook?', back: 'Functions to manage state and side effects' },
-  { front: 'What is useState?', back: 'A hook to manage component state' },
-  { front: 'What is useEffect?', back: 'A hook to manage side effects' },
-  { front: 'What is props?', back: 'Inputs passed into components' },
-  { front: 'What is JSX?', back: 'A syntax extension for JavaScript' },
-];
 export default function FlashcardsPage() {
   const [userInput, setUserInput] = useState('');
+  const [flashcards, setFlashcards] = useState([
+    { front: 'Test Question', back: 'Test Answer' }, // 🧪 Initial test card
+  ]);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
     console.log('Clicked submit');
+    setLoading(true); // Show loading spinner
+
     try {
       const response = await fetch('http://localhost:8000/flashcards/generate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ user_input: userInput }), // ✅ use userInput here
+        body: JSON.stringify({ user_input: userInput }),
       });
 
       if (!response.ok) {
@@ -46,17 +45,65 @@ export default function FlashcardsPage() {
 
       const reader = response.body.getReader();
       const decoder = new TextDecoder('utf-8');
-      let result = '';
+      let buffer = '';
+      const flashcardsList = [];
+      let currentCard = {};
 
       while (true) {
         const { value, done } = await reader.read();
         if (done) break;
-        result += decoder.decode(value);
+        buffer += decoder.decode(value);
+
+        // Split completed lines
+        const lines = buffer.split('\n');
+        buffer = lines.pop(); // hold onto incomplete line for next chunk
+
+        for (const line of lines) {
+          if (!line.trim()) continue;
+
+          try {
+            const parsed = JSON.parse(line);
+
+            if (parsed.q) {
+              const qObj = JSON.parse(parsed.q);
+              currentCard.front = qObj.question;
+            }
+
+            if (parsed.a) {
+              const aObj = JSON.parse(parsed.a);
+              currentCard.back = aObj.answer;
+            }
+
+            if (currentCard.front && currentCard.back) {
+              flashcardsList.push({ ...currentCard });
+              currentCard = {};
+            }
+          } catch (err) {
+            console.warn('Failed to parse line:', line, err.message);
+          }
+        }
       }
 
-      console.log('Raw stream result:', result);
+      // Handle final buffer line
+      if (buffer.trim()) {
+        try {
+          const parsed = JSON.parse(buffer);
+          if (parsed.q) currentCard.front = JSON.parse(parsed.q).question;
+          if (parsed.a) currentCard.back = JSON.parse(parsed.a).answer;
+          if (currentCard.front && currentCard.back) {
+            flashcardsList.push({ ...currentCard });
+          }
+        } catch (err) {
+          console.warn('Failed to parse final buffer:', buffer, err.message);
+        }
+      }
+
+      setFlashcards(flashcardsList);
+      console.log('Parsed flashcards:', flashcardsList);
     } catch (err) {
       console.error('Error:', err.message);
+    } finally {
+      setLoading(false); // Hide loading spinner
     }
   };
 
@@ -72,15 +119,27 @@ export default function FlashcardsPage() {
           </button>
         </div>
       </div>
-
       <div className="flashcard-grid">
-        {flashcards.map((card, index) => {
-          const icon = iconSet[index % iconSet.length];
-          const { base, highlight } = colorSet[index % colorSet.length];
-          return (
-            <Flashcard key={index} front={card.front} back={card.back} color={base} highlight={highlight} icon={icon} />
-          );
-        })}
+        {loading ? (
+          <div className="loading-spinner">Loading...</div>
+        ) : flashcards.length === 0 ? (
+          <p>No flashcards yet. Try entering a number and pressing Enter.</p>
+        ) : (
+          flashcards.map((card, index) => {
+            const icon = iconSet[index % iconSet.length];
+            const { base, highlight } = colorSet[index % colorSet.length];
+            return (
+              <Flashcard
+                key={index}
+                front={card.front}
+                back={card.back}
+                color={base}
+                highlight={highlight}
+                icon={icon}
+              />
+            );
+          })
+        )}
       </div>
     </div>
   );
@@ -89,17 +148,44 @@ export default function FlashcardsPage() {
 function Flashcard({ front, back, color, highlight, icon }) {
   const [flipped, setFlipped] = useState(false);
 
+  const speakText = text => {
+    const utterance = new SpeechSynthesisUtterance(text);
+    speechSynthesis.speak(utterance);
+  };
+
+  const handleSpeechInput = () => {
+    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    recognition.onresult = event => {
+      const spokenText = event.results[0][0].transcript;
+      alert(`You said: ${spokenText}`);
+    };
+    recognition.start();
+  };
+
   return (
     <div
       className={`flashcard-box ${flipped ? 'flipped' : ''}`}
       style={{ backgroundColor: flipped ? highlight : color }}
-      onClick={() => setFlipped(!flipped)}
     >
+      <button className="flip-button" onClick={() => setFlipped(!flipped)} title="Flip">
+        <FaSyncAlt />
+      </button>
+
       <div className="flashcard-icon">
         <img src={icon} alt="icon" />
       </div>
+
       <div className="flashcard-text">
         <h3>{flipped ? back : front}</h3>
+      </div>
+
+      <div className="flashcard-buttons-bottom">
+        <button onClick={() => speakText(flipped ? back : front)} title="Play Audio">
+          <FaVolumeUp />
+        </button>
+        <button onClick={handleSpeechInput} title="Answer with Speech">
+          <FaMicrophone />
+        </button>
       </div>
     </div>
   );
