@@ -32,7 +32,7 @@ export default function FlashcardsPage() {
   const handleSubmit = async () => {
     console.log('Clicked submit');
     try {
-      const response = await fetch('http://localhost:8000/flashcards/create', {
+      const response = await fetch('http://localhost:8000/flashcards/generate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

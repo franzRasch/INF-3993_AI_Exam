@@ -38,7 +38,6 @@ def rag_pipeline(number_of_questions):
         topic="advanced distributed databases", 
         model_name="llama3.2:latest",
         k=k_similarity, 
-        number_of_questions=number_of_questions
     )
     trainer.run()
 

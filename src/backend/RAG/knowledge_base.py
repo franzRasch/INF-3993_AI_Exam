@@ -1,14 +1,18 @@
 import chromadb
 import os
-from local_loader import load_documents
-from splitter import smart_split_documents
-from chromadb.utils import embedding_functions
+from .local_loader import load_documents
+from .splitter import smart_split_documents
+import torch
+
 
 class KnowledgeBase:
     def __init__(self, collection_name: str):
-        self.client = chromadb.PersistentClient()
+        self.client = chromadb.Client()
         self.collection = self.get_collection(collection_name)
-        self.ef = embedding_functions.DefaultEmbeddingFunction()
+        torch.device("cpu")
+        self.ef = chromadb.utils.embedding_functions.SentenceTransformerEmbeddingFunction(
+        model_name="all-MiniLM-L6-v2"
+        )
 
     def get_collection(self, collection_name: str):
         collection = self.client.get_or_create_collection(name = collection_name)
@@ -49,6 +53,6 @@ class KnowledgeBase:
         embeddings = self.ef(words)
         result = self.collection.query(
             query_embeddings = embeddings,
-            n_results = 5
+            n_results = 2
         )
         return result

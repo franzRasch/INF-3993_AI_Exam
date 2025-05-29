@@ -1,5 +1,5 @@
 import os
-from local_loader import load_documents
+from .local_loader import load_documents
 
 def save_document(path: str, content: str) -> str:
     with open(path, "w") as f:

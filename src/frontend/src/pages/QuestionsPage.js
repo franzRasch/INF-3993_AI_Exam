@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../css/QuestionsPage.css';
-import userIcon from '../assets/doodles/25.svg';
-import botIcon from '../assets/doodles/26.svg';
+import userIcon from '../assets/doodles/chatUser.svg';
+import botIcon from '../assets/doodles/chatBot.svg';
 
 export default function QuestionsPage() {
   const [input, setInput] = useState('');

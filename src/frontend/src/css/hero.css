@@ -52,11 +52,14 @@
 }
 
 .hero {
-  padding: 4rem 2rem;
-  background-color: var(--peach-cream);
+  background: url('../assets/hero2.svg') no-repeat center center/cover;
+  height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
+  color: black;
 }
-
 .hero-content {
   max-width: 900px;
   margin: 0 auto;
@@ -66,6 +69,11 @@
   width: 100%;
   height: auto;
   margin-bottom: 2rem;
+}
+.hero-overlay {
+  background: rgba(255, 255, 255, 0.7);
+  padding: 2rem;
+  border-radius: 10px;
 }
 
 .hero h1 {

@@ -2,7 +2,7 @@
 from langchain_chroma import Chroma
 import shutil
 import os
-from embedder import get_embedder
+from .embedder import get_embedder
 
 
 def store_documents(docs, path="chroma_db"):

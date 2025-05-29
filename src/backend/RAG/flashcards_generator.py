@@ -1,10 +1,10 @@
-from flashcards_pipeline import parse_all
+from RAG.flashcards_pipeline import parse_all
 from langchain_ollama import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
-from template import create_question_template, create_answer_template
-from knowledge_base import KnowledgeBase
+from RAG.template import create_question_template, create_answer_template
+from RAG.knowledge_base import KnowledgeBase
 import os
-from knowledge_base import KnowledgeBase
+
 
 
 class FlashcardsGenerator:
@@ -50,6 +50,7 @@ class FlashcardsGenerator:
             generated_question = question,
             context = context
         ).to_string()
+        full_output = ""
         for chunk in self.llm.stream(prompt):
             full_output += chunk
         return full_output.strip()
@@ -63,12 +64,13 @@ class FlashcardsGenerator:
             qa_list.append(qa_pair)
         return qa_list
     
-kb = KnowledgeBase("inf-3701")
-kb.build_collection("books")
-print("KB made")
-fg = FlashcardsGenerator("advanced distributed databases", kb)
-flashcards = fg.generate_flashcards(1)
-for i, flashcard in enumerate(flashcards):
-    print(f"Flashcard {i}:")
-    print(f"Question: {flashcard[0]}\n")
-    print(f"Answer: {flashcard[1]}\n")
+if __name__ == "__main__":
+    kb = KnowledgeBase("inf-3701")
+    kb.build_collection("books")
+    print("KB made")
+    fg = FlashcardsGenerator("advanced distributed databases", kb)
+    flashcards = fg.generate_flashcards(1)
+    for i, flashcard in enumerate(flashcards):
+        print(f"Flashcard {i}:")
+        print(f"Question: {flashcard[0]}\n")
+        print(f"Answer: {flashcard[1]}\n")

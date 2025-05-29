@@ -1,7 +1,7 @@
 from langchain_ollama import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
-from template import create_template, create_question_template, create_answer_template
-from vectorstore import load_vectorstore
+from .template import create_template, create_question_template, create_answer_template
+from .vectorstore import load_vectorstore
 
 
 class FlashCards:
