@@ -2,7 +2,6 @@ from RAG.local_loader import load_documents
 from RAG.splitter import smart_split_documents
 from RAG.vectorstore import store_documents, store_documents
 from RAG.Flashcards_llm_ollama import FlashCards
-from backend.ait_logger import logger
 import os
 
 # --- CONFIG ---
@@ -28,7 +27,7 @@ def insert_documents():
 
     # Store chunks in the vector store
     store_documents(chunks)
-    logger.info(
+    print(
         "Stored %d chunks into the vector store from %d different PDFs.",
         len(chunks),
         len(docs),
