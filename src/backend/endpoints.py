@@ -6,7 +6,7 @@ from RAG.examinator import Examinator
 from starlette.responses import StreamingResponse
 from chat.chat import Chat
 from ait_logger import logger
-from tts.text_to_speach import TextToSpeech
+from tts.text_to_speech import TextToSpeech
 import io
 
 router = APIRouter()
