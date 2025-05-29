@@ -1,7 +1,9 @@
-from template import create_answer_review_template
-from question_generator_base import QuestionGeneratorBase
+import json
+from RAG.template import create_answer_review_template
+from RAG.question_generator_base import QuestionGeneratorBase
 import whisper
 from fastapi import UploadFile
+from starlette.datastructures import UploadFile as StarletteUploadFile
 import os
 import tempfile
 
@@ -30,14 +32,15 @@ class OralExaminator(QuestionGeneratorBase):
         Returns:
             list[str]: A list of generated question strings.
         """
-        print(
-            f"Generating {self.number_of_questions} questions for topic: {self.topic}"
-        )
         questions = []
         for _ in range(self.number_of_questions):
-            question = self.generate_question()
-            questions.append(question)
-            print(f"Generated question: {question}")
+            raw_output = self.generate_question()
+            try:
+                parsed = json.loads(raw_output)
+                questions.append(parsed["question"])
+            except json.JSONDecodeError:
+                print(f"Failed to parse question: {raw_output}")
+
         return questions
 
     def transcribe_answer(self, student_answer: UploadFile) -> str:
@@ -90,12 +93,3 @@ class OralExaminator(QuestionGeneratorBase):
             full_output += chunk
 
         return full_output
-
-
-if __name__ == "__main__":
-    print("Welcome to the Oral Examinator!")
-
-    topic = "Artificial Intelligence"
-    examinator = OralExaminator(topic)
-    questions = examinator.generate_questions()
-    print(f"Generated Questions: {questions}")

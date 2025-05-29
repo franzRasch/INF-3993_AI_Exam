@@ -46,14 +46,9 @@ async def example(exampleData: ExampleDataInput):
 
 @router.post("/oral/questions")
 async def generate_oral_questions(request: OralQuestionRequest):
-    print(
-        f"Generating {request.number_of_questions} questions for topic: {request.topic}"
-    )
     examinator = OralExaminator(
         topic=request.topic, number_of_questions=request.number_of_questions
     )
     questions = examinator.generate_questions()
-
-    print(f"Generated questions: {questions}")
 
     return {"questions": questions}
