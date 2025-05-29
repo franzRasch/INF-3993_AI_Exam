@@ -6,6 +6,8 @@ from RAG.oral_examinator import OralExaminator
 from starlette.responses import StreamingResponse
 from chat.chat import Chat
 from ait_logger import logger
+from tts.text_to_speach import TextToSpeech
+import io
 
 router = APIRouter()
 
@@ -23,6 +25,8 @@ chat = Chat(
     topic="advanced distributed databases",
     model_name="llama3.2:latest",
 )
+
+tts = TextToSpeech(voice="en-US-JennyNeural")
 
 
 class OralQuestionRequest(BaseModel):
@@ -120,7 +124,7 @@ async def evaluate_oral_answer(
         str: The feedback on the student's answer, formatted as JSON.
     """
     examinator = OralExaminator(topic=topic)
-    feedback = examinator.review_answer(question=question, student_answer=audio)
+    feedback = examinator.review_oral_answer(question=question, student_answer=audio)
 
     try:
         return json.loads(feedback)
@@ -146,3 +150,24 @@ async def flashcards_create(user_input: str = Body(..., embed=True)):
         yield json.dumps({"done": True}) + "\n"
 
     return StreamingResponse(event_generator(), media_type="application/x-ndjson")
+
+
+@router.post("/tts")
+async def text_to_speech(text: str = Body(..., embed=True)):
+    """Convert text to speech and return the audio file.
+
+    Args:
+        text (str, optional): The text to convert to speech.
+    """
+    if not text.strip():
+        logger.warning("Received empty text for TTS conversion")
+        raise HTTPException(400, "text cannot be empty")
+
+    audio = await tts.text_to_speech(text)
+    logger.info("TTS conversion completed successfully")
+
+    return StreamingResponse(
+        io.BytesIO(audio),
+        media_type="audio/mpeg",
+        headers={"Content-Disposition": "inline; filename=output.mp3"},
+    )
