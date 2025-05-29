@@ -19,7 +19,8 @@ def create_question_template():
     {already_asked_questions}
     [END ALREADY ASKED QUESTIONS]
 
-    Now write your question and output it **only** as valid JSON** with a single key `"question"`.  
+    Now write your question and output it **only** as valid JSON** with a single key `"question"`.
+    Do not use any other keys or formatting, and only include the question itself.
     Example:
     {{"question":"What is a vector clock?"}}
     """
