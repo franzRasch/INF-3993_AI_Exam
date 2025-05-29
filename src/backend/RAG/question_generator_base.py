@@ -62,3 +62,7 @@ class QuestionGeneratorBase:
 
         self.already_asked_questions.append(full_output.strip())
         return full_output.strip()
+
+
+if __name__ == "__main__":
+    print("Welcome to the Question Generator Base!")

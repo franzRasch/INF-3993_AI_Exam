@@ -2,7 +2,6 @@ from template import create_answer_review_template
 from question_generator_base import QuestionGeneratorBase
 import whisper
 from fastapi import UploadFile
-from starlette.datastructures import UploadFile
 import os
 import tempfile
 
@@ -91,3 +90,12 @@ class OralExaminator(QuestionGeneratorBase):
             full_output += chunk
 
         return full_output
+
+
+if __name__ == "__main__":
+    print("Welcome to the Oral Examinator!")
+
+    topic = "Artificial Intelligence"
+    examinator = OralExaminator(topic)
+    questions = examinator.generate_questions()
+    print(f"Generated Questions: {questions}")
