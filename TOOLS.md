@@ -3,7 +3,6 @@
 ## CSpell
 
 This repo uses CSpell as a spellchecker, being enforced in CI.
-The CI will check the spelling of all `.md` and `.cs`
 You can learn more about CSpell [here](https://cspell.org/docs/getting-started/)
 
 You can install the `cspell` CLI globally with npm.
@@ -15,7 +14,7 @@ npm install -g cspell@latest
 After installation spelling can be checked by running:
 
 ```bash
-cspell "**/*.cs" "**/*.md"
+cspell "**/*.py" "**/*.js" "**/*.ts" "**/*.css" "**/*.md" "**/*.json"
 ```
 
 Alternatively there is a VSCode extension available [here](https://marketplace.visualstudio.com/items?itemName=streetsidesoftware.code-spell-checker).
