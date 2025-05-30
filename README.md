@@ -66,20 +66,52 @@ A detailed list of tools and technologies used in this project is available in [
 
 5. Run "node -v" to check for node js, if you don't have node: install it
 
-### ⚙️ Backend Setup
+
+5. Run shell script for setting up and filling databases
+
+   ```bash
+   chmod +x setup.sh
+   ```
+
+   ```bash
+   ./setup.sh
+   ```
+
+### Backend
 
 #### 📚 Flashcard Generation via RAG
 
-- **Local model inference via [Ollama](https://ollama.com/)**
-- **Model:** `llama3.2:latest`
+- **Ollama** CLI (used to run your local RAG model)
+- **Models**: `llama3.2:latest, llama3:latest, tinyllama:latest `
 
   **Install Ollama:**
 
   - **macOS** (Homebrew):
 
-    ```bash
-    brew install ollama-ai/brew/ollama
-    ```
+  ```bash
+  brew install ollama-ai/brew/ollama
+  ```
+  **or**
+  ```bash
+  brew install ollama
+  ```
+
+  **for windows**
+  go to https://ollama.com/download
+
+
+#### Setup Ollama client using shell script
+   ## After downloading Ollama run this script in a new terminal to setup client locally
+
+   ```bash
+   chmod +x setup_ollama.sh
+   ```
+
+   ```bash
+   ./setup_ollama.sh
+   ```
+
+
 
     - **Linux** (curl script):
 
