@@ -1,6 +1,6 @@
 import json
-from RAG.template import create_answer_review_template
-from RAG.question_generator_base import QuestionGeneratorBase
+from .template import create_answer_review_template
+from .question_generator_base import QuestionGeneratorBase
 import whisper
 from fastapi import UploadFile
 import os

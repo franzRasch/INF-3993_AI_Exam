@@ -1,7 +1,7 @@
 from langchain_ollama import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
-from RAG.template import create_question_template
-from RAG.vectorstore import load_vectorstore
+from .template import create_question_template
+from .vectorstore import load_vectorstore
 
 
 class QuestionGeneratorBase:

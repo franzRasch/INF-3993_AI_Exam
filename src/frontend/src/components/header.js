@@ -14,9 +14,15 @@ export default function Header() {
       </div>
       <nav className="nav-center">
         <ul className="nav-links">
-          <li><Link to="/flashcards">Flashcard generation</Link></li>
-          <li><Link to="/questions">Talk to it</Link></li>
-          <li><Link to="/procrastination">Procrastinate</Link></li>
+          <li>
+            <Link to="/flashcards">Flashcard generation</Link>
+          </li>
+          <li>
+            <Link to="/questions">Talk to it</Link>
+          </li>
+          <li>
+            <Link to="/procrastination">Procrastinate</Link>
+          </li>
         </ul>
       </nav>
       <div className="header-right">

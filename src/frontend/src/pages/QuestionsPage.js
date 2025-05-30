@@ -1,4 +1,4 @@
-import React, { useState,useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import '../css/QuestionsPage.css';
 import userIcon from '../assets/doodles/chatUser.svg';
 import botIcon from '../assets/doodles/chatBot.svg';
@@ -15,8 +15,6 @@ export default function QuestionsPage() {
       chatEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [messages]);
-
-
 
   const handleSubmit = async () => {
     if (!input.trim()) return;
@@ -45,7 +43,6 @@ export default function QuestionsPage() {
       let done = false;
       let firstChunkReceived = false;
 
-
       while (!done) {
         const { value, done: readerDone } = await reader.read();
         done = readerDone;
@@ -60,18 +57,16 @@ export default function QuestionsPage() {
             const json = JSON.parse(line);
             if (json.chunk) {
               if (!firstChunkReceived) {
-                setIsTyping(false);  // Immediately hide the typing indicator
+                setIsTyping(false); // Immediately hide the typing indicator
                 firstChunkReceived = true;
               }
-            
+
               botText += json.chunk;
               setMessages(prev => [
                 ...prev.filter(m => !(m.sender === 'bot' && m.temp)),
                 { sender: 'bot', text: botText, temp: true },
               ]);
             }
-            
-            
           } catch (err) {
             console.warn('Error parsing stream chunk:', err.message);
           }
@@ -79,10 +74,7 @@ export default function QuestionsPage() {
       }
 
       // Final bot message after stream ends
-      setMessages(prev => [
-        ...prev.filter(m => !(m.sender === 'bot' && m.temp)),
-        { sender: 'bot', text: botText },
-      ]);
+      setMessages(prev => [...prev.filter(m => !(m.sender === 'bot' && m.temp)), { sender: 'bot', text: botText }]);
     } catch (err) {
       console.error('Error during fetch:', err.message);
     } finally {
@@ -124,7 +116,9 @@ export default function QuestionsPage() {
           onChange={e => setInput(e.target.value)}
           onKeyDown={e => e.key === 'Enter' && handleSubmit()}
         />
-        <button onClick={handleSubmit} disabled={loading}>Send</button>
+        <button onClick={handleSubmit} disabled={loading}>
+          Send
+        </button>
       </div>
     </div>
   );

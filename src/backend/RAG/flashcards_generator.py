@@ -1,8 +1,8 @@
-from RAG.flashcards_pipeline import parse_all
+from .flashcards_pipeline import parse_all
 from langchain_ollama import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
-from RAG.template import create_question_template, create_answer_template
-from RAG.knowledge_base import KnowledgeBase
+from .template import create_question_template, create_answer_template
+from .knowledge_base import KnowledgeBase
 import os
 
 
