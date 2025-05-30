@@ -10,10 +10,12 @@ llms
 dotenv
 ollama
 qwen
+tinyllama
 
 Skjalg
 Slubowski
 Marie
+Alette
 Stenhaug
 Franz
 Ingebrigtsen
@@ -24,3 +26,6 @@ vectorstore
 vectorstores
 examinator
 levelname
+
+choco
+winget

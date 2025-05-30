@@ -1,48 +1,80 @@
-# INF-3993_AI-Exam
+# 🧠 INF-3993: AI Exam – AI Tutor (AIT)
 
-## Contributors: Franz Ingebrigtsen, Marie Alette Stenhaug and Skjalg Slubowski
+**Contributors:** Franz Ingebrigtsen, Marie Alette Stenhaug & Skjalg Slubowski  
+**Course:** INF-3993 – Generative AI
 
-## Tools
+## 📁 Repository Structure
 
-See [TOOLS.md](TOOLS.md) for a list of tools used in the project.
+- `backend/` – FastAPI backend
+- `frontend/` – React-based frontend UI
+- `requirements.txt` – Python dependencies
+- `setup.sh` – Deployment script to prepare and populate the backend
+- `setup_ollama.sh` – Script to configure Ollama with appropriate models
+- `TOOLS.md` – Documentation of AI models and libraries used
 
-## Running the project
+## 🛠️ Tools Used
 
-1. Create a new venv
+A detailed list of tools and technologies used in this project is available in [`TOOLS.md`](TOOLS.md).
+
+## 🚀 Getting Started
+
+### 🔧 Setup Virtual Environment
+
+1. **Create a new virtual environment:**
 
    ```bash
-   python -m venv venv  # or 'python3' depending on the setup
+   python -m venv venv  # or 'python3' depending on your setup
    ```
 
-2. Activate the new venv
-   Windows:
+2. **Activate the environment:**
 
-   ```bash
-   .\venv\Scripts\activate
-   ```
+   - **Windows:**
 
-   Mac/Linux:
+     ```bash
+     .\venv\Scripts\activate
+     ```
 
-   ```bash
-   source venv/bin/activate
-   ```
+   - **macOS/Linux:**
 
-3. Install dependencies
+     ```bash
+     source venv/bin/activate
+     ```
+
+3. **Install Python dependencies:**
 
    ```bash
    pip install -r requirements.txt
    ```
 
-   You also need to have `ffmpeg` installed.
+4. **Install `ffmpeg` (required for audio processing):**
 
-   - **macOS**: `brew install ffmpeg`
-   - **Linux**: `sudo apt install ffmpeg`
-   - **Windows**: Download from [FFmpeg](https://ffmpeg.org/download.html) and add it to your PATH.
+   - **macOS**:
 
-4. Run "node -v" to check for node js, if you don't have node: install it
+   ```bash
+     brew install ffmpeg
+   ```
 
+   - **Linux**:
 
-5. Run shell script for setting up and filling databases
+   ```bash
+     sudo apt install ffmpeg
+   ```
+
+   - **Windows**: You can install `ffmpeg` using one of the following methods:
+
+   - Chocolatey: `choco install ffmpeg-full`
+   - Scoop: `scoop install ffmpeg`
+   - Winget: `winget install ffmpeg`
+
+5. **Check Node.js:**
+
+   ```bash
+      node -v
+   ```
+
+   If not installed, download it from [https://nodejs.org](https://nodejs.org)
+
+6. **Run shell script for setting up and filling the databases:**
 
    ```bash
    chmod +x setup.sh
@@ -52,70 +84,70 @@ See [TOOLS.md](TOOLS.md) for a list of tools used in the project.
    ./setup.sh
    ```
 
-### Backend
+## ⚙️ Backend Setup
 
-#### RAG for Flashcards generation
+### 📚 Flashcard Generation via RAG
 
-- **Ollama** CLI (used to run your local RAG model)
-- **Models**: `llama3.2:latest, llama3:latest, tinyllama:latest `
+- **Local model inference via [Ollama](https://ollama.com/)**
+- **Models:** `llama3.2:latest`, `llama3:latest`, `tinyllama:latest`, `qwen:1.8b`
 
-  **Install Ollama**
-  macOS / Linux (Homebrew):
+**Install Ollama:**
+
+- **macOS** (Homebrew):
 
   ```bash
   brew install ollama-ai/brew/ollama
   ```
-  **or**
+
+  - **Linux** (curl script):
+
   ```bash
-  brew install ollama
+  curl -fsSL https://ollama.com/install.sh | sh
   ```
 
-  **for windows**
-  go to https://ollama.com/download
+  - **Windows**:  
+    Download the installer from the official website:  
+    [https://ollama.com/download](https://ollama.com/download)
 
+#### 🛠️ Configure Ollama with setup script
 
-#### Setup Ollama client using shell script
-   ## After downloading Ollama run this script in a new terminal to setup client locally
+After installing Ollama, run the following script to download and configure the models:
+
+```bash
+chmod +x setup_ollama.sh
+./setup_ollama.sh
+```
+
+### ▶️ Run Backend
+
+1. **Navigate to the backend directory:**
 
    ```bash
-   chmod +x setup_ollama.sh
+   cd src/backend
    ```
+
+2. **Start the backend server using Uvicorn:**
 
    ```bash
-   ./setup_ollama.sh
+   uvicorn main:app --reload
    ```
 
+#### 📡 API Access
 
+- Swagger UI: [http://localhost:8000/docs](http://localhost:8000/docs)
+- Root endpoint: [http://localhost:8000/](http://localhost:8000/)
 
-#### Run backend
+## 🖼️ Frontend Setup
 
-```bash
-uvicorn main:app --reload
-```
+1. **Install dependencies:**
 
-#### Access backend
+   ```bash
 
-```bash
-http://localhost:8000/
-```
+   npm install
+   ```
 
-#### Access backend api endpoints
+2. **Start the development server:**
 
-```bash
-http://localhost:8000/docs
-```
-
-### Frontend
-
-#### Run frontend
-
-```bash
-npm start
-
-```
-
-Using qwen1.8b local model
-
-```
-
-```
+   ```bash
+   npm start
+   ```

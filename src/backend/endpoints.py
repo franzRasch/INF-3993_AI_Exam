@@ -14,10 +14,6 @@ from tts.text_to_speech import TextToSpeech
 import io
 
 
-
-
-
-
 class ExampleDataInput(BaseModel):
     text: str
 
@@ -25,8 +21,10 @@ class ExampleDataInput(BaseModel):
 class ChatRequest(BaseModel):
     user_input: str
 
+
 class Move(BaseModel):
     user_move: str
+
 
 # Start chat instance
 chat = Chat(
@@ -35,9 +33,7 @@ chat = Chat(
 )
 
 
-kb = KnowledgeBase(
-    collection_name="inf-3701"
-)
+kb = KnowledgeBase(collection_name="inf-3701")
 
 # kb.build_collection("books")
 print("KB built")
@@ -46,21 +42,15 @@ print("KB built")
 fg = FlashcardsGenerator(
     topic="advanced distributed databases",
     model_name="llama3:latest",
-    knowledge_base=kb
-    
+    knowledge_base=kb,
 )
 
-fc= FlashCards(
-    topic="advanced distributed databases",
-    model_name="llama3.2:latest",
-    k=3
-    
-
+fc = FlashCards(
+    topic="advanced distributed databases", model_name="llama3.2:latest", k=3
 )
 
 
 router = APIRouter()
-
 
 
 tts = TextToSpeech(voice="en-US-JennyNeural")
@@ -218,13 +208,16 @@ async def flashcards_create(user_input: str = Body(..., embed=True)):
         if user_input <= 0:
             raise HTTPException(400, "Input must be a positive integer")
     except ValueError:
-        raise HTTPException(400, "Wrong format on input. Please use a positive integer.")
+        raise HTTPException(
+            400, "Wrong format on input. Please use a positive integer."
+        )
 
     async def event_generator():
         for chunk in chat.ask(user_input):
             yield json.dumps({"stream": chunk}) + "\n"
         # once the model is done, send a final marker
         yield json.dumps({"done": True}) + "\n"
+
     return StreamingResponse(event_generator(), media_type="application/x-ndjson")
 
 
@@ -232,13 +225,15 @@ async def flashcards_create(user_input: str = Body(..., embed=True)):
 async def flashcards_generation(user_input: str = Body(..., embed=True)):
     if not user_input:
         raise HTTPException(400, "Input cannot be empty")
-    
+
     try:
         user_input = int(user_input)
         if user_input <= 0:
             raise HTTPException(400, "Input must be a positive integer")
     except ValueError:
-        raise HTTPException(400, "Wrong format on input. Please use a positive integer.")
+        raise HTTPException(
+            400, "Wrong format on input. Please use a positive integer."
+        )
 
     async def event_generator():
         try:
@@ -250,12 +245,11 @@ async def flashcards_generation(user_input: str = Body(..., embed=True)):
             yield json.dumps({"done": True}) + "\n"
         except Exception as e:
             # Log the error if needed
-            yield json.dumps({"error": "Server error while generating flashcards."}) + "\n"
+            yield json.dumps(
+                {"error": "Server error while generating flashcards."}
+            ) + "\n"
 
-    return StreamingResponse(
-        event_generator(),
-        media_type="application/x-ndjson"
-    )
+    return StreamingResponse(event_generator(), media_type="application/x-ndjson")
 
 
 @router.post("/tts/text-to-speech")
@@ -283,8 +277,4 @@ async def text_to_speech(text: str = Body(..., embed=True)):
 def play(move: Move):
     ai_move = get_ai_move()
     result = determine_result(move.user_move, ai_move)
-    return {
-        "user_move": move.user_move,
-        "ai_move": ai_move,
-        "result": result
-    }
+    return {"user_move": move.user_move, "ai_move": ai_move, "result": result}
