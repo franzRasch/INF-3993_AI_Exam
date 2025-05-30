@@ -22,6 +22,8 @@ chat = Chat(
         model_name="llama3.2:latest",
     )
 
+
+
 @router.post("/uploadfile")
 async def upload_pdf(files: List[UploadFile] = File(...)):
     uploaded_files = []

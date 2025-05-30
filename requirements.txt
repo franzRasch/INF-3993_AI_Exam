@@ -11,3 +11,9 @@ ollama
 langchain
 langchain-openai
 python-multipart
+
+torch
+datasets
+transformers
+peft
+bitsandbytes
