@@ -1,5 +1,3 @@
-#!/bin/bash
-
 echo "🔄 Starting LLaMA model setup..."
 
 # Step 1: Download models

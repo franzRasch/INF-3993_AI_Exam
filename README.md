@@ -109,6 +109,12 @@ A detailed list of tools and technologies used in this project is available in [
     Download the installer from the official website:  
     [https://ollama.com/download](https://ollama.com/download)
 
+**Load the models:**
+
+```bash
+ollama serve
+```
+
 #### 🛠️ Configure Ollama with setup script
 
 After installing Ollama, run the following script to download and configure the models:

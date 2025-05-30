@@ -11,6 +11,7 @@ dotenv
 ollama
 qwen
 tinyllama
+PYTHONPATH
 
 Skjalg
 Slubowski
