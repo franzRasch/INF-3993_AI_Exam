@@ -10,14 +10,16 @@ class KnowledgeBase:
         self.client = chromadb.Client()
         self.collection = self.get_collection(collection_name)
         torch.device("cpu")
-        self.ef = chromadb.utils.embedding_functions.SentenceTransformerEmbeddingFunction(
-        model_name="all-MiniLM-L6-v2"
+        self.ef = (
+            chromadb.utils.embedding_functions.SentenceTransformerEmbeddingFunction(
+                model_name="all-MiniLM-L6-v2"
+            )
         )
 
     def get_collection(self, collection_name: str):
-        collection = self.client.get_or_create_collection(name = collection_name)
+        collection = self.client.get_or_create_collection(name=collection_name)
         return collection
-    
+
     def store_in_collection(self, chunks):
         docs = list()
         ids = list()
@@ -27,9 +29,9 @@ class KnowledgeBase:
             ids.append("id" + str(i))
             metadatas.append(chunk.metadata)
             self.collection.add(
-                documents = [chunk.page_content],
-                metadatas = [chunk.metadata],
-                ids=["id"+str(i)]
+                documents=[chunk.page_content],
+                metadatas=[chunk.metadata],
+                ids=["id" + str(i)],
             )
 
     def build_collection(self, path: str):
@@ -40,9 +42,7 @@ class KnowledgeBase:
         new_documents = list()
         for doc in docs:
             filename = doc.metadata["source"]
-            doc_items = self.collection.get(
-                where={"metadata": filename}
-            )
+            doc_items = self.collection.get(where={"metadata": filename})
             if len(doc_items["ids"]) == 0:
                 new_documents.append(doc)
         chunks = smart_split_documents(new_documents, is_exam=False)
@@ -51,8 +51,5 @@ class KnowledgeBase:
     def search_collection(self, search: str):
         words = search.split()
         embeddings = self.ef(words)
-        result = self.collection.query(
-            query_embeddings = embeddings,
-            n_results = 2
-        )
+        result = self.collection.query(query_embeddings=embeddings, n_results=2)
         return result

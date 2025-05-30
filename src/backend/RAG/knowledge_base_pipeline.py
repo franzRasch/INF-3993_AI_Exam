@@ -9,8 +9,9 @@ from Flashcards_llm_ollama import FlashCards
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 CHROMA_DIR = "./chroma_db"
 
+
 def insert_documents():
-        # Step 1: get the path of the current script
+    # Step 1: get the path of the current script
     current_dir = os.path.dirname(os.path.abspath(__file__))
 
     # Step 2: go one directory up
@@ -27,17 +28,19 @@ def insert_documents():
 
     # Store chunks in the vector store
     store_documents(chunks)
-    print(f"Stored {len(chunks)} chunks into the vector store from {len(docs)} different PDFs.")
+    print(
+        f"Stored {len(chunks)} chunks into the vector store from {len(docs)} different PDFs."
+    )
     return len(chunks)
 
 
-def rag_pipeline(number_of_questions):    
+def rag_pipeline(number_of_questions):
     k_similarity = 3
-    #k_similarity = insert_documents()
+    # k_similarity = insert_documents()
     trainer = FlashCards(
-        topic="advanced distributed databases", 
+        topic="advanced distributed databases",
         model_name="llama3.2:latest",
-        k=k_similarity, 
-        number_of_questions=number_of_questions
+        k=k_similarity,
+        number_of_questions=number_of_questions,
     )
     trainer.run()
