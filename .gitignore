@@ -1,12 +1,10 @@
 .DS_Store
-./venv
 env/
-venv/
-/venv
-*/venv
 *.venv
 *.vscode
-venv
+**/venv
+**/w_venv
+
 # Ignore db and cache files
 __pycache__/
 **/chroma_db/
