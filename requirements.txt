@@ -17,3 +17,8 @@ ollama
 openai-whisper
 python-multipart
 colorlog
+torch
+datasets
+transformers
+peft
+bitsandbytes

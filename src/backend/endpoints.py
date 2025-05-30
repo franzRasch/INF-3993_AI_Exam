@@ -67,6 +67,8 @@ class OralQuestionRequest(BaseModel):
     number_of_questions: int = 5
 
 
+
+
 @router.post("/uploadfile")
 async def upload_pdf(files: List[UploadFile] = File(...)):
     uploaded_files = []
