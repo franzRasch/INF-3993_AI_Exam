@@ -10,6 +10,7 @@ llms
 dotenv
 ollama
 qwen
+tinyllama
 
 Skjalg
 Slubowski
