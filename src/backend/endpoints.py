@@ -31,7 +31,7 @@ class Move(BaseModel):
 # Start chat instance
 chat = Chat(
     topic="advanced distributed databases",
-    model_name="tinyllama:latest",
+    model_name="llama3.2:latest",
 )
 
 
@@ -45,7 +45,7 @@ print("KB built")
 
 fg = FlashcardsGenerator(
     topic="advanced distributed databases",
-    model_name="llama3:latest",
+    model_name="llama3:8b",
     knowledge_base=kb
     
 )

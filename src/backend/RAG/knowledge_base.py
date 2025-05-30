@@ -53,6 +53,6 @@ class KnowledgeBase:
         embeddings = self.ef(words)
         result = self.collection.query(
             query_embeddings = embeddings,
-            n_results = 2
+            n_results = 5
         )
         return result

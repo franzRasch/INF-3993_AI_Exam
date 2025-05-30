@@ -1,10 +1,13 @@
+
 from .flashcards_pipeline import parse_all
 from langchain_ollama import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
 from .template import create_question_template, create_answer_template
 from .knowledge_base import KnowledgeBase
+from collections import deque
 import os
 import time
+import random
 
 
 class FlashcardsGenerator:
@@ -17,7 +20,8 @@ class FlashcardsGenerator:
         self.prompt_template_question = ChatPromptTemplate.from_template(create_question_template())
         self.prompt_template_answer = ChatPromptTemplate.from_template(create_answer_template())
 
-        self.already_asked_questions = []
+        self.already_asked_questions = deque(maxlen=10)
+        self._prepare_base_prompt()
 
     def _read_context(self) -> None:
         path = parse_all()
@@ -28,51 +32,56 @@ class FlashcardsGenerator:
                 context = f.read()
                 docs.append(context)
         self.context: list[str] = docs
-    
-    def generate_question(self) -> str:
-        flashcards_context = "\n\n".join(self.context)
-        prompt = self.prompt_template_question.format_prompt(
-            already_asked_questions=self.already_asked_questions,
-            topic=self.topic,
-            retrieved_context=flashcards_context
-        ).to_string()
-        full_output = ""
-        for chunk in self.llm.stream(prompt):
-            full_output += chunk
 
-        self.already_asked_questions.append(full_output.strip())
-        return full_output.strip()
-    
+    def _get_context_snippet(self, max_docs=5) -> str:
+        return "\n\n".join(random.sample(self.context, min(len(self.context), max_docs)))
+
+    def _prepare_base_prompt(self):
+        snippet = self._get_context_snippet()
+        self._base_prompt = self.prompt_template_question.partial(
+            topic=self.topic,
+            retrieved_context=snippet
+        )
+
+    def generate_question(self) -> str:
+        prompt = self._base_prompt.format_prompt(
+            already_asked_questions=list(self.already_asked_questions)
+        ).to_string()
+
+        output = self.llm.invoke(prompt).strip()
+        self.already_asked_questions.append(output)
+        return output
+
     def generate_answer(self, question: str) -> str:
         context = self.knowledge_base.search_collection(question)
         prompt = self.prompt_template_answer.format_prompt(
-            topic = self.topic,
-            generated_question = question,
-            context = context
+            topic=self.topic,
+            generated_question=question,
+            context=context
         ).to_string()
-        full_output = ""
-        for chunk in self.llm.stream(prompt):
-            full_output += chunk
-        return full_output.strip()
+
+        output = self.llm.invoke(prompt).strip()
+        return output
 
     def generate_flashcards(self, num_questions: int) -> list:
         qa_list = list()
         for _ in range(num_questions):
-            start_time=time.perf_counter()
+            start_time = time.perf_counter()
             question = self.generate_question()
-            end_time=time.perf_counter()
-            print(f"time to generate question{end_time - start_time}")
-            start_time=time.perf_counter()
+            end_time = time.perf_counter()
+            print(f"time to generate question: {end_time - start_time:.2f}s")
+
+            start_time = time.perf_counter()
             answer = self.generate_answer(question)
-            end_time=time.perf_counter()
-            print(f"time to generate answer{end_time - start_time}")
-            start_time=time.perf_counter()
+            end_time = time.perf_counter()
+            print(f"time to generate answer: {end_time - start_time:.2f}s")
+
             qa_pair = (question, answer)
             qa_list.append(qa_pair)
-            end_time=time.perf_counter()
-            print(f"time to generate pairs{end_time - start_time}")
+
         return qa_list
-    
+
+
 if __name__ == "__main__":
     kb = KnowledgeBase("inf-3701")
     kb.build_collection("books")

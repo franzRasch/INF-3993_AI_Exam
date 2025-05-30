@@ -85,7 +85,7 @@ export default function QuestionsPage() {
 
   return (
     <div className="questions-page">
-      <h1>Ask a Question</h1>
+      <h1>Ask me a question</h1>
 
       <div className="chat-box">
         {messages.map((msg, index) => (
