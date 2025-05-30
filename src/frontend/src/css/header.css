@@ -64,6 +64,16 @@ nav ul {
   margin: 0;
 }
 
+.nav-links a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.nav-links a:hover {
+  text-decoration: underline; /* Optional: only underline on hover */
+}
+
+
 /* Right side CTA */
 .header-right {
   gap: 1rem;
