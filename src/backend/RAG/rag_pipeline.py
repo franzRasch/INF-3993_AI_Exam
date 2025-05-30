@@ -1,16 +1,16 @@
+from RAG.local_loader import load_documents
+from RAG.splitter import smart_split_documents
+from RAG.vectorstore import store_documents, store_documents
+from RAG.Flashcards_llm_ollama import FlashCards
 import os
-
-from local_loader import load_documents
-from splitter import smart_split_documents
-from vectorstore import store_documents, store_documents
-from Flashcards_llm_ollama import FlashCards
 
 # --- CONFIG ---
 MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 CHROMA_DIR = "./chroma_db"
 
+
 def insert_documents():
-        # Step 1: get the path of the current script
+    # Step 1: get the path of the current script
     current_dir = os.path.dirname(os.path.abspath(__file__))
 
     # Step 2: go one directory up
@@ -27,18 +27,24 @@ def insert_documents():
 
     # Store chunks in the vector store
     store_documents(chunks)
-    print(f"Stored {len(chunks)} chunks into the vector store from {len(docs)} different PDFs.")
+    print(
+        "Stored %d chunks into the vector store from %d different PDFs.",
+        len(chunks),
+        len(docs),
+    )
     return len(chunks)
 
 
-def rag_pipeline(number_of_questions):    
+def rag_pipeline(number_of_questions):
     k_similarity = 3
-    #k_similarity = insert_documents()
     trainer = FlashCards(
-        topic="advanced distributed databases", 
+        topic="advanced distributed databases",
         model_name="llama3.2:latest",
-        k=k_similarity, 
+        k=k_similarity,
+        number_of_questions=number_of_questions,
     )
     trainer.run()
 
-rag_pipeline(3)
+
+if __name__ == "__main__":
+    insert_documents()
