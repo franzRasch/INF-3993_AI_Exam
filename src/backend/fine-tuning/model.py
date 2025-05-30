@@ -15,7 +15,7 @@ model_name = 'TinyLLama/TinyLlama-1.1B-Chat-v1.0'
 adapter_path = './tinyllama-lora-tuned-adapter-database'
 
 bnb_config = BitsAndBytesConfig(
-    load_in_4bit = False ,
+    load_in_4bit = True ,
     bnb_4bit_quant_type = 'nf4',
     bnb_4bit_compute_dtype = torch.bfloat16
 )
@@ -25,14 +25,14 @@ tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
 base_model = AutoModelForCausalLM.from_pretrained(
     model_name,
     quantization_config = bnb_config,
-    device_map = 'cpu',
+    device_map = 'auto',
     trust_remote_code = True
 ).eval()
 
 tmp_model = AutoModelForCausalLM.from_pretrained(
     model_name,
     quantization_config = bnb_config,
-    device_map = 'cpu',
+    device_map = 'auto',
     trust_remote_code = True
 )
 
