@@ -20,6 +20,7 @@
     ".vs",
     ".vscode",
     "workspace.json",
-    "package.json"
+    "package.json",
+    "INF-3701"
   ]
 }
