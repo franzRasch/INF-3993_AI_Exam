@@ -23,14 +23,14 @@ class KnowledgeBase:
     def store_in_collection(self, chunks):
         docs = list()
         ids = list()
-        metadatas = list()
+        metadata = list()
         for i, chunk in enumerate(chunks):
             docs.append(chunk)
             ids.append("id" + str(i))
-            metadatas.append(chunk.metadata)
+            metadata.append(chunk.metadata)
             self.collection.add(
                 documents=[chunk.page_content],
-                metadatas=[chunk.metadata],
+                metadata=[chunk.metadata],
                 ids=["id" + str(i)],
             )
 
