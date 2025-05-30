@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import '../css/FlashcardsPage.css';
 import { FaVolumeUp, FaMicrophone, FaSyncAlt } from 'react-icons/fa';
 
@@ -145,12 +145,34 @@ export default function FlashcardsPage() {
   );
 }
 
+
 function Flashcard({ front, back, color, highlight, icon }) {
   const [flipped, setFlipped] = useState(false);
+  const audioRef = useRef(null);
 
-  const speakText = text => {
-    const utterance = new SpeechSynthesisUtterance(text);
-    speechSynthesis.speak(utterance);
+  const handleTTS = async () => {
+    const text = flipped ? back : front;
+    try {
+      const response = await fetch('http://localhost:8000/tts/text-to-speech', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch audio');
+      }
+
+      const audioBlob = await response.blob();
+      const audioUrl = URL.createObjectURL(audioBlob);
+
+      if (audioRef.current) {
+        audioRef.current.src = audioUrl;
+        audioRef.current.play();
+      }
+    } catch (error) {
+      console.error('Error playing audio:', error);
+    }
   };
 
   const handleSpeechInput = () => {
@@ -180,13 +202,17 @@ function Flashcard({ front, back, color, highlight, icon }) {
       </div>
 
       <div className="flashcard-buttons-bottom">
-        <button onClick={() => speakText(flipped ? back : front)} title="Play Audio">
+        <button onClick={handleTTS} title="Play Audio">
           <FaVolumeUp />
         </button>
         <button onClick={handleSpeechInput} title="Answer with Speech">
           <FaMicrophone />
         </button>
       </div>
+
+      <audio ref={audioRef} hidden />
     </div>
   );
 }
+
+
