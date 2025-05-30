@@ -57,7 +57,7 @@ See [TOOLS.md](TOOLS.md) for a list of tools used in the project.
 #### RAG for Flashcards generation
 
 - **Ollama** CLI (used to run your local RAG model)
-- **Model**: `llama3.2:latest`
+- **Models**: `llama3.2:latest, llama3:latest, tinyllama:latest `
 
   **Install Ollama**
   macOS / Linux (Homebrew):
