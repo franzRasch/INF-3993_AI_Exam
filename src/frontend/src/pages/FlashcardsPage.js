@@ -21,27 +21,19 @@ const colorSet = [
 
 export default function FlashcardsPage() {
   const [userInput, setUserInput] = useState('');
-  const [flashcards, setFlashcards] = useState([
-    { front: 'Test Question', back: 'Test Answer' }, // 🧪 Initial test card
-  ]);
+  const [flashcards, setFlashcards] = useState([{ front: 'What is a quorum?', back: 'Test Answer' }]);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
-    console.log('Clicked submit');
-    setLoading(true); // Show loading spinner
-
+    setLoading(true);
     try {
       const response = await fetch('http://localhost:8000/flashcards/generate', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ user_input: userInput }),
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to fetch flashcards');
-      }
+      if (!response.ok) throw new Error('Failed to fetch flashcards');
 
       const reader = response.body.getReader();
       const decoder = new TextDecoder('utf-8');
@@ -53,27 +45,15 @@ export default function FlashcardsPage() {
         const { value, done } = await reader.read();
         if (done) break;
         buffer += decoder.decode(value);
-
-        // Split completed lines
         const lines = buffer.split('\n');
-        buffer = lines.pop(); // hold onto incomplete line for next chunk
+        buffer = lines.pop();
 
         for (const line of lines) {
           if (!line.trim()) continue;
-
           try {
             const parsed = JSON.parse(line);
-
-            if (parsed.q) {
-              const qObj = JSON.parse(parsed.q);
-              currentCard.front = qObj.question;
-            }
-
-            if (parsed.a) {
-              const aObj = JSON.parse(parsed.a);
-              currentCard.back = aObj.answer;
-            }
-
+            if (parsed.q) currentCard.front = JSON.parse(parsed.q).question;
+            if (parsed.a) currentCard.back = JSON.parse(parsed.a).answer;
             if (currentCard.front && currentCard.back) {
               flashcardsList.push({ ...currentCard });
               currentCard = {};
@@ -84,7 +64,6 @@ export default function FlashcardsPage() {
         }
       }
 
-      // Handle final buffer line
       if (buffer.trim()) {
         try {
           const parsed = JSON.parse(buffer);
@@ -99,11 +78,10 @@ export default function FlashcardsPage() {
       }
 
       setFlashcards(flashcardsList);
-      console.log('Parsed flashcards:', flashcardsList);
     } catch (err) {
       console.error('Error:', err.message);
     } finally {
-      setLoading(false); // Hide loading spinner
+      setLoading(false);
     }
   };
 
@@ -145,13 +123,19 @@ export default function FlashcardsPage() {
   );
 }
 
-
 function Flashcard({ front, back, color, highlight, icon }) {
   const [flipped, setFlipped] = useState(false);
+  const [recording, setRecording] = useState(false);
+  const [evaluation, setEvaluation] = useState(null);
+  const [mediaRecorder, setMediaRecorder] = useState(null);
+  const [audioChunks, setAudioChunks] = useState([]);
+  const [recordingError, setRecordingError] = useState(null);
+  const [isProcessing, setIsProcessing] = useState(false);
+
   const audioRef = useRef(null);
 
-  const handleTTS = async () => {
-    const text = flipped ? back : front;
+  const handleTTS = async text => {
+    if (!text?.trim()) return;
     try {
       const response = await fetch('http://localhost:8000/tts/text-to-speech', {
         method: 'POST',
@@ -159,29 +143,82 @@ function Flashcard({ front, back, color, highlight, icon }) {
         body: JSON.stringify({ text }),
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to fetch audio');
-      }
-
+      if (!response.ok) throw new Error(`TTS failed with status ${response.status}`);
       const audioBlob = await response.blob();
       const audioUrl = URL.createObjectURL(audioBlob);
 
       if (audioRef.current) {
         audioRef.current.src = audioUrl;
-        audioRef.current.play();
+        audioRef.current.play().catch(err => console.error('Playback error:', err));
       }
-    } catch (error) {
-      console.error('Error playing audio:', error);
+    } catch (err) {
+      console.error('TTS error:', err.message || err);
     }
   };
 
-  const handleSpeechInput = () => {
-    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-    recognition.onresult = event => {
-      const spokenText = event.results[0][0].transcript;
-      alert(`You said: ${spokenText}`);
-    };
-    recognition.start();
+  const handleSpeechInput = async () => {
+    if (recording) {
+      stopRecording();
+      return;
+    }
+
+    setEvaluation(null);
+    setRecordingError(null);
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const options = { mimeType: 'audio/webm;codecs=opus' };
+      const recorder = new MediaRecorder(stream, options);
+
+      const chunks = [];
+      recorder.ondataavailable = e => e.data.size > 0 && chunks.push(e.data);
+
+      recorder.onstop = async () => {
+        setIsProcessing(true);
+        const audioBlob = new Blob(chunks, { type: 'audio/webm' });
+
+        if (audioBlob.size < 2048) {
+          setRecordingError('Recording too short or silent. Try again.');
+          setIsProcessing(false);
+          return;
+        }
+
+        const formData = new FormData();
+        formData.append('topic', 'advanced distributed databases');
+        formData.append('question', front);
+        formData.append('audio', audioBlob, 'recording.webm');
+
+        try {
+          const response = await fetch('http://localhost:8000/evaluate/oral', {
+            method: 'POST',
+            body: formData,
+          });
+
+          if (!response.ok) throw new Error('Evaluation failed');
+          const feedback = await response.json();
+          setEvaluation(feedback);
+        } catch (error) {
+          setRecordingError('Failed to evaluate the recording.');
+          console.error(error);
+        } finally {
+          setIsProcessing(false);
+          setRecording(false);
+        }
+      };
+
+      setAudioChunks([]);
+      setMediaRecorder(recorder);
+      recorder.start();
+      setRecording(true);
+    } catch (err) {
+      setRecordingError('Microphone access denied or not available.');
+      console.error(err);
+    }
+  };
+
+  const stopRecording = () => {
+    if (mediaRecorder && recording) {
+      mediaRecorder.stop();
+    }
   };
 
   return (
@@ -202,17 +239,38 @@ function Flashcard({ front, back, color, highlight, icon }) {
       </div>
 
       <div className="flashcard-buttons-bottom">
-        <button onClick={handleTTS} title="Play Audio">
+        <button onClick={() => handleTTS(flipped ? back : front)} title="Play Audio" disabled={isProcessing}>
           <FaVolumeUp />
         </button>
-        <button onClick={handleSpeechInput} title="Answer with Speech">
+
+        <button onClick={handleSpeechInput} title="Answer with Speech" disabled={recording || isProcessing}>
           <FaMicrophone />
         </button>
+
+        {recording && (
+          <button onClick={stopRecording} title="Stop Recording" disabled={isProcessing}>
+            {isProcessing ? 'Processing...' : 'Stop'}
+          </button>
+        )}
       </div>
 
       <audio ref={audioRef} hidden />
+
+      {recordingError && (
+        <div className="flashcard-evaluation error">
+          <p>{recordingError}</p>
+        </div>
+      )}
+
+      {evaluation && (
+        <div className="flashcard-evaluation">
+          <h4>Evaluation Feedback:</h4>
+          <p>{evaluation.feedback}</p>
+          {evaluation.feedback?.toLowerCase().includes('incomplete') && (
+            <p className="hint">Try expanding your answer with examples or explanations.</p>
+          )}
+        </div>
+      )}
     </div>
   );
 }
-
-

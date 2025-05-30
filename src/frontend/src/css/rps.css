@@ -1,0 +1,82 @@
+.rps-container {
+  text-align: center;
+  margin-top: 2rem;
+  font-family: 'Arial', sans-serif;
+}
+
+.rps-title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.rps-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.rps-button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: #f0f0f0;
+  border: 2px solid #333;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.rps-button:hover {
+  background-color: #ddd;
+}
+
+.rps-hands {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5rem;
+  margin-bottom: 2rem;
+}
+
+.hand {
+  width: 250px;
+  height: 250px;
+}
+
+.hand img {
+  width: 100%;
+  height: auto;
+}
+
+.left-hand {
+  transform: scaleX(1);
+}
+.right-hand {
+  transform: scaleX(1);
+}
+.shake {
+  animation: shake 2s;
+}
+
+@keyframes shake {
+  0% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-10px);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+  75% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.rps-result {
+  font-size: 1.2rem;
+  margin-top: 1rem;
+}

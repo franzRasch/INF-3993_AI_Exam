@@ -25,9 +25,7 @@ export default function Header() {
           </li>
         </ul>
       </nav>
-      <div className="header-right">
-        <button className="cta-button">Frequently asked questions</button>
-      </div>
+      <div className="header-right"></div>
     </header>
   );
 }

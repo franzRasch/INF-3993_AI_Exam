@@ -4,7 +4,7 @@ from langchain_core.prompts import ChatPromptTemplate
 from .template import create_question_template, create_answer_template
 from .knowledge_base import KnowledgeBase
 import os
-
+import time
 
 
 class FlashcardsGenerator:
@@ -58,10 +58,19 @@ class FlashcardsGenerator:
     def generate_flashcards(self, num_questions: int) -> list:
         qa_list = list()
         for _ in range(num_questions):
+            start_time=time.perf_counter()
             question = self.generate_question()
+            end_time=time.perf_counter()
+            print(f"time to generate question{end_time - start_time}")
+            start_time=time.perf_counter()
             answer = self.generate_answer(question)
+            end_time=time.perf_counter()
+            print(f"time to generate answer{end_time - start_time}")
+            start_time=time.perf_counter()
             qa_pair = (question, answer)
             qa_list.append(qa_pair)
+            end_time=time.perf_counter()
+            print(f"time to generate pairs{end_time - start_time}")
         return qa_list
     
 if __name__ == "__main__":

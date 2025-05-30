@@ -54,14 +54,14 @@ class Examinator(QuestionGeneratorBase):
 
         file_content = student_answer.file.read()
 
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".m4a") as tmp:
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".webm") as tmp:
             tmp.write(file_content)
             tmp_path = tmp.name
 
         try:
             result = self.whisper_model.transcribe(tmp_path, language="en")
             result_text = result["text"]
-
+            print("Transcribed text:", result_text)
             return result_text
         finally:
             os.remove(tmp_path)
@@ -87,6 +87,7 @@ class Examinator(QuestionGeneratorBase):
             retrieved_context=self.context,
         )
         full_output = ""
+        print(question)
 
         for chunk in self.llm.stream(prompt):
             full_output += chunk

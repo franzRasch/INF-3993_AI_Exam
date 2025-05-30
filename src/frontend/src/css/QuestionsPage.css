@@ -3,6 +3,7 @@
   max-width: 1220px;
   margin: 0 auto;
   font-family: var(--font-main);
+  background-color: var(--peach-cream);
 }
 
 .chat-box {

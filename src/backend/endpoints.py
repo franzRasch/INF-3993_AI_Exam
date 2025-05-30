@@ -8,6 +8,7 @@ from chat.chat import Chat
 from RAG.flashcards_generator import FlashcardsGenerator
 from RAG.knowledge_base import KnowledgeBase
 from RAG.Flashcards_llm_ollama import FlashCards
+from game import get_ai_move, determine_result
 from ait_logger import logger
 from tts.text_to_speech import TextToSpeech
 import io
@@ -24,11 +25,13 @@ class ExampleDataInput(BaseModel):
 class ChatRequest(BaseModel):
     user_input: str
 
+class Move(BaseModel):
+    user_move: str
 
 # Start chat instance
 chat = Chat(
     topic="advanced distributed databases",
-    model_name="llama3.2:latest",
+    model_name="tinyllama:latest",
 )
 
 
@@ -274,3 +277,14 @@ async def text_to_speech(text: str = Body(..., embed=True)):
         media_type="audio/mpeg",
         headers={"Content-Disposition": "inline; filename=output.mp3"},
     )
+
+
+@router.post("/play")
+def play(move: Move):
+    ai_move = get_ai_move()
+    result = determine_result(move.user_move, ai_move)
+    return {
+        "user_move": move.user_move,
+        "ai_move": ai_move,
+        "result": result
+    }

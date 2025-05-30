@@ -6,7 +6,7 @@ import Header from './components/header';
 import Hero from './components/hero';
 import CookieBanner from './components/cookieBanner';
 import ServicesSection from './components/services';
-
+import BackgroundVideo from './components/backgroundVideo.js';
 import HomePage from './pages/homepage.js';
 import FlashcardsPage from './pages/FlashcardsPage.js';
 import QuestionsPage from './pages/QuestionsPage.js';
