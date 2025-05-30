@@ -2,12 +2,12 @@ from pydantic import BaseModel
 from fastapi import APIRouter, UploadFile, File, HTTPException, Form, Body
 import json
 from typing import List
-from RAG.examinator import Examinator
+from examinator import Examinator
 from starlette.responses import StreamingResponse
 from chat.chat import Chat
-from RAG.flashcards_generator import FlashcardsGenerator
-from RAG.knowledge_base import KnowledgeBase
-from RAG.Flashcards_llm_ollama import FlashCards
+from flashcards_generator import FlashcardsGenerator
+from knowledge_base import KnowledgeBase
+from Flashcards_llm_ollama import FlashCards
 from game import get_ai_move, determine_result
 from ait_logger import logger
 from tts.text_to_speech import TextToSpeech
