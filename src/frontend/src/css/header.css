@@ -1,0 +1,89 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  color: var(--main-text-color);
+  background-color: var(--light-pink);
+}
+
+.header-left,
+.nav-center,
+.header-right {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.logo-icon {
+  width: 40px;
+  height: auto;
+  justify-self: center;
+  padding-right: 2px;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.button {
+  background-color: pink;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Center nav section */
+.nav-center {
+  flex: 1;
+  justify-content: center;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.nav-links a:hover {
+  text-decoration: underline; /* Optional: only underline on hover */
+}
+
+/* Right side CTA */
+.header-right {
+  gap: 1rem;
+}
+
+.cta-button {
+  background-color: var(--electric-blue);
+  color: white;
+  font-weight: bold;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+}

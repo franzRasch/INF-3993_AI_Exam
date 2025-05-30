@@ -1,5 +1,26 @@
+:root {
+  --light-pink: #f8dbdb;
+  --yellow-lime: #dde225;
+  --orange: #f98805;
+  --hot-pink: #f35695;
+  --dark-green: #264414;
+  --electric-blue: #4b11ed;
+  --black: #000000;
+  --aqua: #c2fcf7;
+  --soft-yellow: #fff789;
+  --peach-cream: #fff3e2;
+  --font-main: 'Poppins', sans-serif;
+  --main-text-color: #000000;
+  --second-text-color: var(--electric-blue);
+}
+
 .App {
   text-align: center;
+  font-family: var(--font-main);
+  background-color: var(--peach-cream);
+  color: #000;
+  margin: 0;
+  padding: 0;
 }
 
 .App-logo {

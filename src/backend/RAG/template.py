@@ -32,6 +32,11 @@ def create_answer_template():
     You are an expert in {topic}.
     Answer the following question in **no more than 100 characters**.
     Provide **only** the answer—no labels, explanations, or extra text.
+    Use the following context to answer the question:
+
+    [BEGIN CONTEXT]
+    {context}
+    [END CONTEXT]
 
     Question: {generated_question}
 
