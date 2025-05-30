@@ -8,6 +8,8 @@
 - `backend/` – FastAPI backend
 - `frontend/` – React-based frontend UI
 - `requirements.txt` – Python dependencies
+- `setup.sh` – Deployment script to prepare and populate the backend
+- `setup_ollama.sh` – Script to configure Ollama with appropriate models
 - `TOOLS.md` – Documentation of AI models and libraries used
 
 ## 🛠️ Tools Used
@@ -64,10 +66,15 @@ A detailed list of tools and technologies used in this project is available in [
    - Scoop: `scoop install ffmpeg`
    - Winget: `winget install ffmpeg`
 
-5. Run "node -v" to check for node js, if you don't have node: install it
+5. **Check Node.js:**
 
+   ```bash
+      node -v
+   ```
 
-5. Run shell script for setting up and filling databases
+   If not installed, download it from [https://nodejs.org](https://nodejs.org)
+
+6. **Run shell script for setting up and filling the databases:**
 
    ```bash
    chmod +x setup.sh
@@ -77,77 +84,69 @@ A detailed list of tools and technologies used in this project is available in [
    ./setup.sh
    ```
 
-### Backend
+## ⚙️ Backend Setup
 
-#### 📚 Flashcard Generation via RAG
+### 📚 Flashcard Generation via RAG
 
-- **Ollama** CLI (used to run your local RAG model)
-- **Models**: `llama3.2:latest, llama3:latest, tinyllama:latest `
+- **Local model inference via [Ollama](https://ollama.com/)**
+- **Models:** `llama3.2:latest`, `llama3:latest`, `tinyllama:latest`, `qwen:1.8b`
 
-  **Install Ollama:**
+**Install Ollama:**
 
-  - **macOS** (Homebrew):
+- **macOS** (Homebrew):
 
   ```bash
   brew install ollama-ai/brew/ollama
   ```
-  **or**
+
+  - **Linux** (curl script):
+
   ```bash
-  brew install ollama
+  curl -fsSL https://ollama.com/install.sh | sh
   ```
 
-  **for windows**
-  go to https://ollama.com/download
+  - **Windows**:  
+    Download the installer from the official website:  
+    [https://ollama.com/download](https://ollama.com/download)
 
+#### 🛠️ Configure Ollama with setup script
 
-#### Setup Ollama client using shell script
-   ## After downloading Ollama run this script in a new terminal to setup client locally
-
-   ```bash
-   chmod +x setup_ollama.sh
-   ```
-
-   ```bash
-   ./setup_ollama.sh
-   ```
-
-
-
-    - **Linux** (curl script):
-
-    ```bash
-    curl -fsSL https://ollama.com/install.sh | sh
-    ```
-
-    - **Windows**:  
-      Download the installer from the official website:  
-      [https://ollama.com/download](https://ollama.com/download)
-
-#### ▶️ Run Backend
+After installing Ollama, run the following script to download and configure the models:
 
 ```bash
-uvicorn main:app --reload
+chmod +x setup_ollama.sh
+./setup_ollama.sh
 ```
+
+### ▶️ Run Backend
+
+1. **Navigate to the backend directory:**
+
+   ```bash
+   cd src/backend
+   ```
+
+2. **Start the backend server using Uvicorn:**
+
+   ```bash
+   uvicorn main:app --reload
+   ```
 
 #### 📡 API Access
 
 - Swagger UI: [http://localhost:8000/docs](http://localhost:8000/docs)
 - Root endpoint: [http://localhost:8000/](http://localhost:8000/)
 
-### 🖼️ Frontend Setup
+## 🖼️ Frontend Setup
 
-Make sure you have **Node.js** installed (`node -v` to verify).  
-If not, download it from [https://nodejs.org](https://nodejs.org)
-
-#### ▶️ Run Frontend
-
-1. Install dependencies:
+1. **Install dependencies:**
 
    ```bash
+
    npm install
    ```
 
-2. Start the development server:
+2. **Start the development server:**
 
    ```bash
    npm start
