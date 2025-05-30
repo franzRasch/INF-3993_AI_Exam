@@ -41,6 +41,17 @@ See [TOOLS.md](TOOLS.md) for a list of tools used in the project.
 
 4. Run "node -v" to check for node js, if you don't have node: install it
 
+
+5. Run shell script for setting up and filling databases
+
+   ```bash
+   chmod +x setup.sh
+   ```
+
+   ```bash
+   ./setup.sh
+   ```
+
 ### Backend
 
 #### RAG for Flashcards generation
@@ -54,6 +65,27 @@ See [TOOLS.md](TOOLS.md) for a list of tools used in the project.
   ```bash
   brew install ollama-ai/brew/ollama
   ```
+  **or**
+  ```bash
+  brew install ollama
+  ```
+
+  **for windows**
+  go to https://ollama.com/download
+
+
+#### Setup Ollama client using shell script
+   ## After downloading Ollama run this script in a new terminal to setup client locally
+
+   ```bash
+   chmod +x setup_ollama.sh
+   ```
+
+   ```bash
+   ./setup_ollama.sh
+   ```
+
+
 
 #### Run backend
 
