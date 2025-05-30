@@ -1,89 +1,122 @@
-# INF-3993_AI-Exam
+# 🧠 INF-3993: AI Exam – AI Tutor (AIT)
 
-## Contributors: Franz Ingebrigtsen, Marie Alette Stenhaug and Skjalg Slubowski
+**Contributors:** Franz Ingebrigtsen, Marie Alette Stenhaug & Skjalg Slubowski  
+**Course:** INF-3993 – Generative AI
 
-## Tools
+## 📁 Repository Structure
 
-See [TOOLS.md](TOOLS.md) for a list of tools used in the project.
+- `backend/` – FastAPI backend
+- `frontend/` – React-based frontend UI
+- `requirements.txt` – Python dependencies
+- `TOOLS.md` – Documentation of AI models and libraries used
 
-## Running the project
+## 🛠️ Tools Used
 
-1. Create a new venv
+A detailed list of tools and technologies used in this project is available in [`TOOLS.md`](TOOLS.md).
 
-   ```bash
-   python -m venv venv  # or 'python3' depending on the setup
-   ```
+## 🚀 Getting Started
 
-2. Activate the new venv
-   Windows:
+### 🔧 Setup Virtual Environment
 
-   ```bash
-   .\venv\Scripts\activate
-   ```
-
-   Mac/Linux:
+1. **Create a new virtual environment:**
 
    ```bash
-   source venv/bin/activate
+   python -m venv venv  # or 'python3' depending on your setup
    ```
 
-3. Install dependencies
+2. **Activate the environment:**
+
+   - **Windows:**
+
+     ```bash
+     .\venv\Scripts\activate
+     ```
+
+   - **macOS/Linux:**
+
+     ```bash
+     source venv/bin/activate
+     ```
+
+3. **Install Python dependencies:**
 
    ```bash
    pip install -r requirements.txt
    ```
 
-   You also need to have `ffmpeg` installed.
+4. **Install `ffmpeg` (required for audio processing):**
 
-   - **macOS**: `brew install ffmpeg`
-   - **Linux**: `sudo apt install ffmpeg`
-   - **Windows**: Download from [FFmpeg](https://ffmpeg.org/download.html) and add it to your PATH.
+   - **macOS**:
 
-4. Run "node -v" to check for node js, if you don't have node: install it
+   ```bash
+     brew install ffmpeg
+   ```
 
-### Backend
+   - **Linux**:
 
-#### RAG for Flashcards generation
+   ```bash
+     sudo apt install ffmpeg
+   ```
 
-- **Ollama** CLI (used to run your local RAG model)
-- **Model**: `llama3.2:latest`
+   - **Windows**: You can install `ffmpeg` using one of the following methods:
 
-  **Install Ollama**
-  macOS / Linux (Homebrew):
+   - Chocolatey: `choco install ffmpeg-full`
+   - Scoop: `scoop install ffmpeg`
+   - Winget: `winget install ffmpeg`
 
-  ```bash
-  brew install ollama-ai/brew/ollama
-  ```
+5. Run "node -v" to check for node js, if you don't have node: install it
 
-#### Run backend
+### ⚙️ Backend Setup
+
+#### 📚 Flashcard Generation via RAG
+
+- **Local model inference via [Ollama](https://ollama.com/)**
+- **Model:** `llama3.2:latest`
+
+  **Install Ollama:**
+
+  - **macOS** (Homebrew):
+
+    ```bash
+    brew install ollama-ai/brew/ollama
+    ```
+
+    - **Linux** (curl script):
+
+    ```bash
+    curl -fsSL https://ollama.com/install.sh | sh
+    ```
+
+    - **Windows**:  
+      Download the installer from the official website:  
+      [https://ollama.com/download](https://ollama.com/download)
+
+#### ▶️ Run Backend
 
 ```bash
 uvicorn main:app --reload
 ```
 
-#### Access backend
+#### 📡 API Access
 
-```bash
-http://localhost:8000/
-```
+- Swagger UI: [http://localhost:8000/docs](http://localhost:8000/docs)
+- Root endpoint: [http://localhost:8000/](http://localhost:8000/)
 
-#### Access backend api endpoints
+### 🖼️ Frontend Setup
 
-```bash
-http://localhost:8000/docs
-```
+Make sure you have **Node.js** installed (`node -v` to verify).  
+If not, download it from [https://nodejs.org](https://nodejs.org)
 
-### Frontend
+#### ▶️ Run Frontend
 
-#### Run frontend
+1. Install dependencies:
 
-```bash
-npm start
+   ```bash
+   npm install
+   ```
 
-```
+2. Start the development server:
 
-Using qwen1.8b local model
-
-```
-
-```
+   ```bash
+   npm start
+   ```
