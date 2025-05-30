@@ -21,6 +21,7 @@
     ".vscode",
     "workspace.json",
     "package.json",
-    "INF-3701"
+    "INF-3701",
+    "fine-tuning"
   ]
 }
