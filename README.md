@@ -3,6 +3,9 @@
 **Contributors:** Franz Ingebrigtsen, Marie Alette Stenhaug & Skjalg Slubowski  
 **Course:** INF-3993 – Generative AI
 
+## 🎥 Project Demo Video Link
+https://www.youtube.com/watch?v=KQ1kB-K5VuA
+
 ## 📁 Repository Structure
 
 - `backend/` – FastAPI backend
