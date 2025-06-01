@@ -1,4 +1,4 @@
-# 🧠 INF-3993: AI Exam – AI Tutor (AIT)
+# 🧠 INF-3993: Exam – Artificial Intelligence Tutor (AIT)
 
 **Contributors:** Franz Ingebrigtsen, Marie Alette Stenhaug & Skjalg Slubowski  
 **Course:** INF-3993 – Generative AI
