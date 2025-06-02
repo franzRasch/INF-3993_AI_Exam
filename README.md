@@ -92,7 +92,7 @@ A detailed list of tools and technologies used in this project is available in [
 ### 📚 Flashcard Generation via RAG
 
 - **Local model inference via [Ollama](https://ollama.com/)**
-- **Models:** `llama3.2:latest`, `llama3:latest`, `tinyllama:latest`, `qwen:1.8b`
+- **Models:** `llama3.2:latest`, `llama3:latest`, `tinyllama:latest`
 
 **Install Ollama:**
 
