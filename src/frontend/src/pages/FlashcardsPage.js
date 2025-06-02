@@ -21,7 +21,7 @@ const colorSet = [
 
 export default function FlashcardsPage() {
   const [userInput, setUserInput] = useState('');
-  const [flashcards, setFlashcards] = useState([{ front: 'What is a quorum?', back: 'Test Answer' }]);
+  const [flashcards, setFlashcards] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
